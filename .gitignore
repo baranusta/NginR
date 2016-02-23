@@ -1,5 +1,7 @@
 
 NginR.sdf
+NginR.opensdf
+NginR/Debug/
 
 # Compiled Object files
 *.slo
@@ -29,3 +31,4 @@ NginR.sdf
 *.exe
 *.out
 *.app
+
