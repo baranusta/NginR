@@ -77,13 +77,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)/NginR/lib/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\NginR\NginR\lib\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>glew64.lib;cudart_static.lib;freeglut.lib;cudart.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\baran_000\Documents\Visual Studio 2013\Projects\NginR\NginR\NginR\lib\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew64.lib;cudart_static.lib;freeglut.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\NginR\NginR\lib\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
@@ -91,6 +91,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <CudaCompile>
       <Include>$(ProjectDir)/NginR/lib/inc;%(Include)</Include>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
     </CudaCompile>
     <CudaLink>
       <AdditionalLibraryDirectories>$(ProjectDir)\NginR\lib\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -101,11 +102,13 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)\NginR\lib\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>cudart.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew64.lib;cudart_static.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\baran_000\Documents\Visual Studio 2013\Projects\NginR\NginR\NginR\lib\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
@@ -122,15 +125,15 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)/NginR/lib/inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\NginR\NginR\lib\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>glew64.lib;cudart_static.lib;freeglut.lib;cudart.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\baran_000\Documents\Visual Studio 2013\Projects\NginR\NginR\NginR\lib\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew64.lib;cudart_static.lib;freeglut.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\NginR\NginR\lib\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
@@ -138,6 +141,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <CudaCompile>
       <Include>$(ProjectDir)/NginR/lib/inc;%(Include)</Include>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
     </CudaCompile>
     <CudaLink>
       <AdditionalLibraryDirectories>$(ProjectDir)\NginR\lib\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -150,13 +154,15 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)\NginR\lib\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>cudart.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew64.lib;cudart_static.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\baran_000\Documents\Visual Studio 2013\Projects\NginR\NginR\NginR\lib\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
@@ -167,10 +173,53 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="kernel.cu" />
+    <CudaCompile Include="NginR\renderers\raytracers\RayTrace.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NginR\Engine.cpp" />
+    <ClCompile Include="NginR\GameLooper.cpp" />
+    <ClCompile Include="NginR\graphic-library-wrappers\GraphicLibraryWrapper.cpp" />
+    <ClCompile Include="NginR\graphic-library-wrappers\opengl-wrapper\OpenGLWrapper.cpp" />
+    <ClCompile Include="NginR\renderers\raytracers\RayTracingStrategyCPU.cpp" />
+    <ClCompile Include="NginR\renderers\raytracers\RayTracingStrategyCUDA.cpp" />
+    <ClCompile Include="NginR\renderers\RenderController.cpp" />
+    <ClCompile Include="NginR\utils\Color.cpp" />
+    <ClCompile Include="NginR\utils\FileReading.cpp" />
+    <ClCompile Include="NginR\utils\Vec3.cpp" />
+    <ClCompile Include="NginR\viewutils\TextViewGL.cpp" />
+    <ClCompile Include="NginR\world\objects-cpu\game-objects\GeometricObject.cpp" />
+    <ClCompile Include="NginR\world\objects-cpu\game-objects\Sphere.cpp" />
+    <ClCompile Include="NginR\world\objects-cpu\light\Light.cpp" />
+    <ClCompile Include="NginR\world\objects-gpu\SphereGPU.cpp" />
+    <ClCompile Include="NginR\world\World.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="NginR\Engine.h" />
+    <ClInclude Include="NginR\GameLooper.h" />
+    <ClInclude Include="NginR\graphic-library-wrappers\GraphicLibraryWrapper.h" />
+    <ClInclude Include="NginR\graphic-library-wrappers\GraphicLibraryWrapperFactory.h" />
+    <ClInclude Include="NginR\graphic-library-wrappers\opengl-wrapper\OpenGLWrapper.h" />
+    <ClInclude Include="NginR\renderers\raytracers\RayTracingStrategyCPU.h" />
+    <ClInclude Include="NginR\renderers\raytracers\RayTracingStrategyCUDA.h" />
+    <ClInclude Include="NginR\renderers\raytracers\RayTracingStrategySequential.h" />
+    <ClInclude Include="NginR\renderers\raytracers\RayTracingStratingOpenMP.h" />
+    <ClInclude Include="NginR\renderers\RenderController.h" />
+    <ClInclude Include="NginR\renderers\RenderStrategy.h" />
+    <ClInclude Include="NginR\utils\Color.h" />
+    <ClInclude Include="NginR\utils\CommonEnums.h" />
+    <ClInclude Include="NginR\utils\RandomGenerator.h" />
+    <ClInclude Include="NginR\utils\Utils.h" />
+    <ClInclude Include="NginR\utils\Vec3.h" />
+    <ClInclude Include="NginR\viewutils\FrameTextViewGL.h" />
+    <ClInclude Include="NginR\viewutils\TextViewGL.h" />
+    <ClInclude Include="NginR\world\objects-cpu\camera\Camera.h" />
+    <ClInclude Include="NginR\world\objects-cpu\game-objects\GeometricObject.h" />
+    <ClInclude Include="NginR\world\objects-cpu\game-objects\Sphere.h" />
+    <ClInclude Include="NginR\world\objects-cpu\light\DirectedLight.h" />
+    <ClInclude Include="NginR\world\objects-cpu\light\Light.h" />
+    <ClInclude Include="NginR\world\objects-gpu\SphereGPU.h" />
+    <ClInclude Include="NginR\world\World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
