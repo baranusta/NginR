@@ -214,6 +214,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="NginR\viewutils\FrameTextViewGL.h" />
     <ClInclude Include="NginR\viewutils\TextViewGL.h" />
     <ClInclude Include="NginR\world\objects-cpu\camera\Camera.h" />
+    <ClInclude Include="NginR\world\objects-cpu\game-objects\GameObjectFactory.h" />
     <ClInclude Include="NginR\world\objects-cpu\game-objects\GeometricObject.h" />
     <ClInclude Include="NginR\world\objects-cpu\game-objects\Sphere.h" />
     <ClInclude Include="NginR\world\objects-cpu\light\DirectedLight.h" />

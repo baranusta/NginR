@@ -10,7 +10,7 @@ extern "C" void SetMemoryOnGPU(int, SphereGpu*);
 extern "C" void FreeMemoryOnGPU();
 
 
-void RayTracingStrategyCUDA::DrawNextFrame(World w, Vec3 ViewPort, unsigned int* dst)
+void RayTracingStrategyCUDA::DrawNextFrame(World w, Vec3<int> ViewPort, unsigned int* dst)
 {
 	//float* SphereOnGpu = w->GetCUDAObjects();
 	//CudaRayTrace(SphereOnGpu, dst, ViewPort.getY(), ViewPort.getX(), w->GetCUDAObjectsSize());

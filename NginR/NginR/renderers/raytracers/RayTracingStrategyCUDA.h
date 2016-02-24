@@ -13,7 +13,7 @@ public:
 		this->name = "CUDA";
 	}
 
-	void DrawNextFrame(World w, Vec3 ViewPort, unsigned int* dst) override;
+	void DrawNextFrame(World w, Vec3<int> ViewPort, unsigned int* dst) override;
 private:
 	int elmSize;
 };

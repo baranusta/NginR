@@ -31,7 +31,7 @@ void textDisplay()
 
 	glClear(GL_DEPTH_BUFFER_BIT);
 
-	//displayTextFunction();
+	displayTextFunction();
 
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();

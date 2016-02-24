@@ -1,26 +1,30 @@
 #ifndef _VEC3_H_
 #define _VEC3_H_
 
+template <typename T>
 class Vec3
 {
 public:
 	Vec3();
-	Vec3(float xPos, float yPos, float zPos);
+	Vec3(T xPos, T yPos, T zPos);
 	void Normalize();
-	float getX();
-	float getY();
-	float getZ();
+	T getX();
+	T getY();
+	T getZ();
 	Vec3 operator-(Vec3 rhs);
 	Vec3 operator+(Vec3 rhs);
 	void rotate(Vec3 angle);
-	float dotProduct(Vec3 vec);
+	T dotProduct(Vec3 vec);
 
 private:
-	float x;
-	float y;
-	float z;
+	T x;
+	T y;
+	T z;
 };
 
-typedef Vec3 Angle;
+template<typename T>
+using Angle = Vec3<T>;
+
+#include "Vec3.cpp"
 
 #endif

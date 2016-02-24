@@ -43,7 +43,7 @@ ProcessorType RenderController::getProcessorType() const
 	return selectedStrategy->getProcessorType();
 }
 
-void RenderController::Apply(World w, Vec3 ViewPort, unsigned int* dst) const
+void RenderController::Apply(World w, Vec3<int> ViewPort, unsigned int* dst) const
 {
 	if (this->selectedStrategy == nullptr)
 		return;

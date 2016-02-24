@@ -2,23 +2,23 @@
 
 #include <algorithm>
 
-void RayTracingStrategyCPU::IterateInnerLoop(World w, Vec3 ViewPort, int i, int k, unsigned int* dst)
+void RayTracingStrategyCPU::IterateInnerLoop(World w, Vec3<int> ViewPort, int i, int k, unsigned int* dst)
 {
 	for (int j = -ViewPort.getZ() / 2, t = 0; j < ViewPort.getZ() / 2; j++, t++)
 	{
-		Vec3 src(ViewPort.getX(), i, j);
-		Vec3 ray = Vec3(1, 0, 0);
+		Vec3<float> src(ViewPort.getX(), i, j);
+		Vec3<float> ray = Vec3<float>(1, 0, 0);
 		/*Vec3 ray = Vec3(ViewPort.getX(), i, j) - eyePos;
 		ray.rotate(ViewPortAngle);
 		ray.Normalize();*/
 		float minDist = 1000000;
-		Vec3 Normal, hitPoint;
+		Vec3<float> Normal, hitPoint;
 		int objectId;
 		std::vector<GeometricObject*> Objects = w.GetObjects();
 		for (int id = 0,size = Objects.size(); id < size; id++)
 		{
 			float dist;
-			Vec3 N, hP;
+			Vec3<float> N, hP;
 			if (Objects[id]->isRayIntersects(ray, src, N, hP, dist))
 			{
 				if (dist < minDist)
@@ -45,16 +45,16 @@ void RayTracingStrategyCPU::IterateInnerLoop(World w, Vec3 ViewPort, int i, int 
 
 }
 
-int RayTracingStrategyCPU::DetermineColor(Light light, Vec3 ray, Vec3 Normal, Vec3 hitPoint, int objId, std::vector<GeometricObject*>* Objects)
+int RayTracingStrategyCPU::DetermineColor(Light light, Vec3<float> ray, Vec3<float> Normal, Vec3<float> hitPoint, int objId, std::vector<GeometricObject*>* Objects)
 {
-	Vec3 lightPos = light.getPos();
-	Vec3 SourceToLight = lightPos - hitPoint;
+	Vec3<float> lightPos = light.getPos();
+	Vec3<float> SourceToLight = lightPos - hitPoint;
 	SourceToLight.Normalize();
 	bool willBeShaded = false;
 
 	for (int id = 0; id < Objects->size(); id++)
 	{
-		Vec3 N, hP;
+		Vec3<float> N, hP;
 		float dist;
 		if (id != objId && (*Objects)[id]->isRayIntersects(SourceToLight, hitPoint, N, hP, dist))
 		{
@@ -72,7 +72,7 @@ int RayTracingStrategyCPU::DetermineColor(Light light, Vec3 ray, Vec3 Normal, Ve
 	}
 	else{
 		float kd = diffuseConst;
-		Vec3 h = SourceToLight - ray;
+		Vec3<float> h = SourceToLight - ray;
 		Normal.Normalize();
 		h.Normalize();
 		//Diffuse Illumination

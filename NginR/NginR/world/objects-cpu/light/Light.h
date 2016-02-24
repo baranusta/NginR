@@ -6,24 +6,24 @@
 class Light
 {
 public:
-	Light(Vec3 pos, Color Ambient, Color Diffuse, Color Specular) :
+	Light(Vec3<float> pos, Color Ambient, Color Diffuse, Color Specular) :
 	status(true), AmbientLight(Ambient), DiffuseLight(Diffuse), SpecularhighLight(Specular), position(pos)
 	{};
 	~Light();
-	Vec3 getPos();
+	Vec3<float> getPos();
 
 	Color getSpec();
 	Color getDiffuse();
 	Color getAmbient();
 	void changeStatus(bool);
-	void changePosition(Vec3 pos);
+	void changePosition(Vec3<float> pos);
 	
 private:
 	bool status;
 	Color AmbientLight;
 	Color DiffuseLight;
 	Color SpecularhighLight;
-	Vec3 position;
+	Vec3<float> position;
 };
 
 #endif

@@ -11,7 +11,7 @@ public:
 	RenderController();
 	~RenderController();
 	void AddStrategy(RenderOptionNames key, RenderStrategy* strategy);
-	void Apply(World w, Vec3 ViewPort, unsigned int* dst) const;
+	void Apply(World w, Vec3<int> ViewPort, unsigned int* dst) const;
 	bool SetStrategy(RenderOptionNames key, void(*fnc)(char*));
 	ProcessorType getProcessorType() const;
 private:

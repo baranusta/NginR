@@ -13,7 +13,7 @@ public:
 		this->name = "OpenMP";
 	}
 
-	void DrawNextFrame(World w, Vec3 ViewPort, unsigned int* dst) override
+	void DrawNextFrame(World w, Vec3<int> ViewPort, unsigned int* dst) override
 	{
 		int i, k;
 		int min = -ViewPort.getY() / 2;

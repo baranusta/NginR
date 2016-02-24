@@ -2,9 +2,9 @@
 
 float eyePosx = -25000;
 
-Vec3 ViewPort(eyePosx + 23000, 768, 512);
-Vec3 eyePos(eyePosx, 0, 0);
-Angle ViewPortAngle(0, 0, 0);
+Vec3<int> ViewPort(eyePosx + 23000, 768, 512);
+Vec3<float> eyePos(eyePosx, 0, 0);
+Angle<float> ViewPortAngle(0, 0, 0);
 
 
 Engine::GameLooper::GameLooper()

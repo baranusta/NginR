@@ -1,7 +1,7 @@
 #include "Sphere.h"
 #include <iostream>
 
-Sphere::Sphere(Vec3 p, float r)
+Sphere::Sphere(Vec3<float> p, float r)
 {
 	center = p;
 	radius = r;
@@ -15,7 +15,7 @@ Sphere::Sphere(std::string line)
 	eachword >> type;
 	float xPos, yPos, zPos;
 	eachword >> xPos >> yPos >> zPos;
-	Vec3 c(xPos, yPos, zPos);
+	Vec3<float> c(xPos, yPos, zPos);
 	center = c;
 	float r;
 	eachword >> r;
@@ -30,7 +30,7 @@ Sphere::Sphere(std::string line)
 	ColorAmbient = Color(xPos, yPos, zPos);
 }
 
-void Sphere::getInfo(Vec3&pos, float &r, Color& c, bool& is)
+void Sphere::getInfo(Vec3<float>&pos, float &r, Color& c, bool& is)
 {
 	is = toRight;
 	c = ColorDiffuse;
@@ -77,10 +77,10 @@ void Sphere::Move()
 	int t = 2;
 	if (!toRight)
 		t *= -1;
-	center = Vec3(center.getX(), center.getY() + t, center.getZ());
+	center = Vec3<float>(center.getX(), center.getY() + t, center.getZ());
 }
 
-bool Sphere::isRayIntersects(Vec3 ray, Vec3 src, Vec3& Normal, Vec3 & Point, float &dist)
+bool Sphere::isRayIntersects(Vec3<float> ray, Vec3<float> src, Vec3<float>& Normal, Vec3<float> & Point, float &dist)
 {
 	float a = 1;
 	float b = 2 * (ray.getX() *(src.getX() - center.getX()) + ray.getY() *(src.getY() - center.getY()) + ray.getZ() *(src.getZ() - center.getZ()));
@@ -95,7 +95,7 @@ bool Sphere::isRayIntersects(Vec3 ray, Vec3 src, Vec3& Normal, Vec3 & Point, flo
 	if (t > 0)
 	{
 		dist = sqrt(a) * t;
-		Vec3 hitd(ray.getX()*t, ray.getY()*t, ray.getZ()*t);
+		Vec3<float> hitd(ray.getX()*t, ray.getY()*t, ray.getZ()*t);
 		Point = src + hitd;
 		Normal = Point - center;
 		return true;
@@ -104,7 +104,7 @@ bool Sphere::isRayIntersects(Vec3 ray, Vec3 src, Vec3& Normal, Vec3 & Point, flo
 		return false;
 }
 
-bool Sphere::isIntersects(Vec3 p)
+bool Sphere::isIntersects(Vec3<float> p)
 {
 	if (getMaxX() > p.getX() && getMinX() < p.getX())
 		return true;
@@ -115,9 +115,9 @@ bool Sphere::isIntersects(Vec3 p)
 	return false;
 }
 
-int Sphere::nextPos(Vec3 p)
+int Sphere::nextPos(Vec3<float> p)
 {
-	int pos = 0;
+	float pos = 0;
 	if (center.getX() > p.getX())
 		pos += 4;
 	if (center.getY() > p.getY())

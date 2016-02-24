@@ -1,31 +1,56 @@
-#include "Vec3.h"
+#include <istream>
+#ifdef _VEC3_H_
+
 #include <math.h>
 
+template <typename T>
+std::istream& operator>>(std::istream& is, Vec3<T>& obj)
+{
+	T x,y,z;
+	is>>x;
+	is>>y;
+	is>>z;
 
-Vec3::Vec3(float xPos, float yPos, float zPos)
+	obj = Vec3<T>(x,y,z);
+	return is;
+}
+
+template <typename T>
+Vec3<T>::Vec3()
+{
+	x = 0;
+	y = 0;
+	z = 0;
+}
+
+template <typename T>
+Vec3<T>::Vec3(T xPos, T yPos, T zPos)
 {
 	x = xPos;
 	y = yPos;
 	z = zPos;
 }
 
-
-Vec3 Vec3::operator-(Vec3 rhs)
+template <typename T>
+Vec3<T> Vec3<T>::operator-(Vec3 rhs)
 {
 	return Vec3(x - rhs.x, y - rhs.y, z - rhs.z);
 }
 
-Vec3 Vec3::operator+(Vec3 rhs)
+template <typename T>
+Vec3<T> Vec3<T>::operator+(Vec3 rhs)
 {
 	return Vec3(x + rhs.x, y + rhs.y, z + rhs.z);
 }
 
-float Vec3::dotProduct(Vec3 vec)
+template <typename T>
+T Vec3<T>::dotProduct(Vec3 vec)
 {
 	return x*vec.x + y*vec.y + z*vec.z;
 }
 
-void Vec3::rotate(Vec3 angle)
+template <typename T>
+void Vec3<T>::rotate(Vec3<T> angle)
 {
 	//rotate around x
 	y = y*cos(angle.getX()) - z*sin(angle.getX());
@@ -40,7 +65,8 @@ void Vec3::rotate(Vec3 angle)
 	y = y*sin(angle.getZ()) + y*cos(angle.getZ());
 }
 
-void Vec3::Normalize()
+template <typename T>
+void Vec3<T>::Normalize()
 {
 	float length = sqrt(x*x + y*y + z*z);
 	x = x / length;
@@ -48,24 +74,24 @@ void Vec3::Normalize()
 	z = z / length;
 }
 
-Vec3::Vec3()
-{
-	x = 0;
-	y = 0;
-	z = 0;
-}
 
-float Vec3::getX()
+
+template <typename T>
+T Vec3<T>::getX()
 {
 	return x;
 }
 
-float Vec3::getY()
+template <typename T>
+T Vec3<T>::getY()
 {
 	return y;
 }
 
-float Vec3::getZ()
+template <typename T>
+T Vec3<T>::getZ()
 {
 	return z;
 }
+
+#endif

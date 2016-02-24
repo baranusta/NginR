@@ -1,6 +1,6 @@
 #include "Light.h"
 
-Vec3 Light::getPos()
+Vec3<float> Light::getPos()
 {
 	return position;
 }
@@ -29,7 +29,7 @@ void Light::changeStatus(bool stat)
 	status = stat;
 }
 
-void Light::changePosition(Vec3 pos)
+void Light::changePosition(Vec3<float> pos)
 {
 	position = pos;
 }

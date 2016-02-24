@@ -50,7 +50,7 @@ void Engine::Engine::startEngine()
 	World world(Color(0.3f,0.3f, 0.3f), graphicLib);
 
 	world.CreateWithFile("World.txt");
-	world.AddLight(Vec3(0.f, 0.f, 500.f),
+	world.AddLight(Vec3<float>(0.f, 0.f, 500.f),
 		Color(0.1f, 0.1f, 0.1f),
 		Color(0.8f, 0.8f, 0.8f),
 		Color(1.f, 1.f, 1.f));

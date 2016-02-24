@@ -2,6 +2,8 @@
 #define _WORLD_H_
 
 #include <vector>
+#include <string>
+#include <fstream>
 
 #include "../graphic-library-wrappers/GraphicLibraryWrapper.h"
 #include "objects-cpu/game-objects/GeometricObject.h"
@@ -31,7 +33,7 @@ public:
 	int GetObjectSize() const;
 	Color GetAmbient() const;
 
-	void CreateWithFile(std::string);
+	bool CreateWithFile(std::string);
 	void SetCudaEnabled(bool isCudaEnabled);
 	void InitGPUMemoryForObjects();
 
@@ -40,7 +42,7 @@ public:
 	template<class T>
 	void CopyFromGPUArray(T *obj);
 
-	void AddLight(Vec3 pos, Color Ambient, Color Diffuse, Color Specular);
+	void AddLight(Vec3<float> pos, Color Ambient, Color Diffuse, Color Specular);
 	void AddLight(Light light);
 	//This will be removed
 	//when the raytracing strategies implemented
@@ -52,6 +54,8 @@ private:
 	void UpdateObjectsSequential();
 	void UpdateObjectsCUDA();
 	void UpdateObjectsOpenMP();
+
+	void SetWorldBoundaries(Vec3<float> boundariesFCorner, Vec3<float> boundariesSCorner);
 
 	bool isCUDAenabled;
 

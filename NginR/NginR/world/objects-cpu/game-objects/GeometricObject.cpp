@@ -3,25 +3,30 @@
 
 int GeometricObject::Count = 0;
 
+GeometricObject::~GeometricObject()
+{
+}
+
+
 void GeometricObject::setRect(RectWorld* c)
 {
 	container = c;
 }
-int GeometricObject::getId()
+int GeometricObject::getId() const
 {
 	return id;
 }
 
 
-Color GeometricObject::getDiffuse()
+Color GeometricObject::getDiffuse() const
 {
 	return ColorDiffuse;
 }
-Color GeometricObject::getAmbient()
+Color GeometricObject::getAmbient() const
 {
 	return ColorDiffuse;
 }
-Color GeometricObject::getSpecular()
+Color GeometricObject::getSpecular() const
 {
 	return ColorDiffuse;
 }

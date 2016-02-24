@@ -10,6 +10,8 @@ class GeometricObject
 {
 public:
 	static int Count;
+
+	~GeometricObject();
 	virtual float getMaxX() = 0;
 	virtual float getMaxY() = 0;
 	virtual float getMaxZ() = 0;
@@ -17,16 +19,16 @@ public:
 	virtual float getMinY() = 0;
 	virtual float getMinZ() = 0;
 	virtual void Move() = 0;
-	virtual void getInfo(Vec3&, float&, Color&, bool&) = 0;
-	virtual bool isIntersects(Vec3 p) = 0;
+	virtual void getInfo(Vec3<float>&, float&, Color&, bool&) = 0;
+	virtual bool isIntersects(Vec3<float> p) = 0;
 	void setRect(RectWorld* c);
-	Color getDiffuse();
-	Color getAmbient();
-	Color getSpecular();
-	int getId();
-	virtual bool isRayIntersects(Vec3 ray, Vec3 src, Vec3&, Vec3 & Point, float& dist) = 0;
+	Color getDiffuse() const;
+	Color getAmbient() const;
+	Color getSpecular() const;
+	int getId() const;
+	virtual bool isRayIntersects(Vec3<float> ray, Vec3<float> src, Vec3<float>&, Vec3<float> & Point, float& dist) = 0;
 
-	virtual int nextPos(Vec3 p) = 0;
+	virtual int nextPos(Vec3<float> p) = 0;
 protected:
 	int id;
 	Color ColorAmbient;

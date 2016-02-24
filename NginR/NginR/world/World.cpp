@@ -1,4 +1,5 @@
 #include "World.h"
+#include "objects-cpu/game-objects/GameObjectFactory.h"
 
 
 extern "C" void CudaUpdateObjects(float*, int);
@@ -40,8 +41,30 @@ Color World::GetAmbient() const
 	return AmbientColor;
 }
 
-void World::CreateWithFile(std::string)
+bool World::CreateWithFile(std::string fileName)
 {
+	std::ifstream file(fileName);
+	if (file.is_open())
+	{
+		std::string line;
+		Vec3<float> fCorner,sCorner;
+		file >> fCorner >> sCorner;
+		SetWorldBoundaries(fCorner,sCorner);
+		file >> line;
+		//To pass explanation line in file
+		std::getline(file, line);
+		std::getline(file, line);
+
+		GameObjectFactory factory;
+		while (std::getline(file, line))
+		{
+			GeometricObject* object = factory.getGameObjectFromLine(line);
+			if (object!=nullptr)
+				AddObject(object);
+		}
+		return true;
+	}
+	return false;
 }
 
 void World::SetCudaEnabled(bool isCudaEnabled)
@@ -54,7 +77,7 @@ void World::InitGPUMemoryForObjects()
 	gLibrary->initializeCudaMemory(Objects.size() * 8 * sizeof(float));
 }
 
-void World::AddLight(Vec3 pos, Color Ambient, Color Diffuse, Color Specular)
+void World::AddLight(Vec3<float> pos, Color Ambient, Color Diffuse, Color Specular)
 {
 	AddLight(Light(pos,Ambient,Diffuse,Specular));
 }
@@ -124,7 +147,7 @@ void World::SetUpdateType(RenderOptionNames type)
 			float* objectArr = new float[Objects.size() * 8];
 			for (int i = 0; i < Objects.size(); i++)
 			{
-				Vec3 pos;
+				Vec3<float> pos;
 				Color color;
 				float r;
 				bool toRight;
@@ -149,7 +172,7 @@ void World::SetUpdateType(RenderOptionNames type)
 			float* objectArr = new float[Objects.size() * 8]; 
 			for (int i = 0; i < Objects.size(); i++)
 			{
-				Vec3 pos;
+				Vec3<float> pos;
 				Color color;
 				float r;
 				bool toRight;
@@ -175,6 +198,7 @@ int World::GetObjectSize() const
 	return Objects.size();
 }
 
+#pragma region private_methods
 template<class T>
 void World::CopyToGPUArray(T *obj)
 {
@@ -186,7 +210,7 @@ void World::CopyFromGPUArray(T *obj)
 {
 	for (int i = 0; i < Objects.size(); i++)
 	{
-		Vec3 pos;
+		Vec3<float> pos;
 		Color color;
 		float r;
 		bool toRight;
@@ -201,3 +225,10 @@ void World::CopyFromGPUArray(T *obj)
 		obj[i * 8 + 7] = toRight ? 1.0f : -1.0f;
 	}
 }
+
+void World::SetWorldBoundaries(Vec3<float> boundariesFCorner, Vec3<float> boundariesSCorner)
+{
+	
+}
+
+#pragma endregion private_methods

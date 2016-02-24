@@ -173,5 +173,8 @@
     <ClInclude Include="NginR\world\objects-cpu\game-objects\GeometricObject.h">
       <Filter>engine\world\objects-cpu\game-objects</Filter>
     </ClInclude>
+    <ClInclude Include="NginR\world\objects-cpu\game-objects\GameObjectFactory.h">
+      <Filter>engine\world\objects-cpu\game-objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
