@@ -4,12 +4,15 @@
 RenderController::RenderController()
 {
 	selectedStrategy = nullptr;
+	Strategies = new RenderStrategy*[__EndOfNames__]();
 }
 
 RenderController::~RenderController()
 {
 	selectedStrategy = nullptr;
-	Strategies.clear();
+	for (int i = 0; i < __EndOfNames__;i++)
+		delete [] Strategies[i];
+	delete[] Strategies;
 }
 
 void RenderController::AddStrategy(RenderOptionNames key, RenderStrategy* strategy)
@@ -19,7 +22,7 @@ void RenderController::AddStrategy(RenderOptionNames key, RenderStrategy* strate
 
 bool RenderController::SetStrategy(RenderOptionNames key, void (*fnc)(char*))
 {
-	if (Strategies.count(key) == 1)
+	if (Strategies[key] != nullptr)
 	{
 		selectedStrategy = Strategies[key];
 

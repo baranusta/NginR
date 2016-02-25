@@ -32,10 +32,12 @@ public:
 	void UpdateObjects(ProcessorType pType);
 	int GetObjectSize() const;
 	Color GetAmbient() const;
+	float* GetCudaObjects() const;
 
 	bool CreateWithFile(std::string);
 	void SetCudaEnabled(bool isCudaEnabled);
 	void InitGPUMemoryForObjects();
+	void UnmapCUDAObjects();
 
 	template<class T>
 	void CopyToGPUArray(T *obj);
@@ -50,6 +52,7 @@ public:
 	{
 		return Objects;
 	}
+
 private:
 	void UpdateObjectsSequential();
 	void UpdateObjectsCUDA();
@@ -67,6 +70,10 @@ private:
 	//Later This Will hold Light Objects
 	std::vector<Light> lights;
 	std::vector<GeometricObject*> Objects;
+
+	//CUDA Object
+	float* cudaObjects;
+	float* cudaLights;
 	
 };
 

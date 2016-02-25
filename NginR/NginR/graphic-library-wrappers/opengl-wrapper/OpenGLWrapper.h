@@ -17,11 +17,12 @@ namespace Engine
 		explicit OpenGLWrapper(int window_width_i = 1024, int window_heigt_i = 768);
 
 
-		void initializeCuda(int window_width, int window_height) override;
+		void initializeCuda() override;
 		void initializeCudaMemory(int size) override;
 		void copyObjectsFromCuda(float* objectArr, int size) override;
 		void copyObjectsToCuda(float* objectArr, int size) override;
 		void updateObjectsAtCudaMemory(std::function<void(float*)>cudaUpdate) override;
+		void unMapObjects();
 
 		void changeProcessorType(ProcessorType) override;
 		void startMainLoop() override;

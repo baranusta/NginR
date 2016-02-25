@@ -13,7 +13,7 @@ namespace Engine
 		{
 		}
 
-		virtual void initializeCuda(int window_width, int window_height) = 0;
+		virtual void initializeCuda() = 0;
 		virtual void initializeCudaMemory(int size) = 0;
 		virtual void copyObjectsToCuda(float* objectArr,int size) = 0;
 		virtual void copyObjectsFromCuda(float* objectArr, int size) = 0;
@@ -26,6 +26,7 @@ namespace Engine
 		virtual void setCleanupFunction(void(*fnc)()) = 0;
 		virtual void setTextDisplayFunction(void(*fnc)()) = 0;
 		virtual void startMainLoop() = 0;
+		virtual void unMapObjects() = 0;
 	};
 }
 

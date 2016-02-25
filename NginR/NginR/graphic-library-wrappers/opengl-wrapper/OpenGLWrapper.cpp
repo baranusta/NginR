@@ -113,26 +113,12 @@ void display()
 }
 
 
-inline void Engine::OpenGLWrapper::initializeCuda(int window_width, int window_height)
+inline void Engine::OpenGLWrapper::initializeCuda()
 {
 	checkCudaErrors(cudaGLSetGLDevice(0));
 	// Generate a buffer ID
-	
-
-	//checkCudaErrors(cudaGraphicsGLRegisterBuffer(&textureBuffer, cudaTextureBufferID, cudaGraphicsMapFlagsWriteDiscard));
+	checkCudaErrors(cudaGraphicsGLRegisterBuffer(&cudaTextureBuffer, textureBufferID, cudaGraphicsMapFlagsWriteDiscard));
 }
-
-inline void Engine::OpenGLWrapper::initializeCudaMemory(int size)
-{
-	glGenBuffers(1, &objectsBufferID);
-	// Make this the current UNPACK buffer (OpenGL is state-based)
-	glBindBuffer(GL_ARRAY_BUFFER, objectsBufferID);
-	// Allocate data for the buffer. 4-channel 8-bit image
-	glBufferData(GL_ARRAY_BUFFER, size,
-		NULL, GL_DYNAMIC_COPY);
-	checkCudaErrors(cudaGraphicsGLRegisterBuffer(&cudaObjectsBuffer, objectsBufferID, cudaGraphicsMapFlagsWriteDiscard));
-}
-
 
 void Engine::OpenGLWrapper::updateObjectsAtCudaMemory(std::function<void(float*)>cudaUpdate)
 {
@@ -142,10 +128,14 @@ void Engine::OpenGLWrapper::updateObjectsAtCudaMemory(std::function<void(float*)
 	cudaGraphicsResourceGetMappedPointer((void**)&objects, &num_bytes2, cudaObjectsBuffer);
 
 	cudaUpdate(objects);
-
-	cudaGraphicsUnmapResources(1, &cudaObjectsBuffer, 0);
 	//delete objects may be necessary
 }
+
+void Engine::OpenGLWrapper::unMapObjects()
+{
+	cudaGraphicsUnmapResources(1, &cudaObjectsBuffer, 0);
+}
+
 
 Engine::OpenGLWrapper::OpenGLWrapper(int window_width_i, int window_heigt_i)
 {
@@ -164,7 +154,7 @@ Engine::OpenGLWrapper::OpenGLWrapper(int window_width_i, int window_heigt_i)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_ALPHA | GLUT_DOUBLE | GLUT_DEPTH);
 
 	glutInitWindowSize(window_width_i, window_heigt_i);
-	glutCreateWindow("NginaR");
+	glutCreateWindow("NginR");
 
 	// initialize necessary OpenGL extensions
 	glewInit();
@@ -242,8 +232,20 @@ void Engine::OpenGLWrapper::copyObjectsFromCuda(float* objectArr, int size)
 {
 }
 
+inline void Engine::OpenGLWrapper::initializeCudaMemory(int size)
+{
+	glGenBuffers(1, &objectsBufferID);
+	// Make this the current UNPACK buffer (OpenGL is state-based)
+	glBindBuffer(GL_ARRAY_BUFFER, objectsBufferID);
+	// Allocate data for the buffer. 4-channel 8-bit image
+	glBufferData(GL_ARRAY_BUFFER, size,
+		NULL, GL_DYNAMIC_COPY);
+	checkCudaErrors(cudaGraphicsGLRegisterBuffer(&cudaObjectsBuffer, objectsBufferID, cudaGraphicsMapFlagsWriteDiscard));
+}
+
 void Engine::OpenGLWrapper::copyObjectsToCuda(float* objectArr, int size)
 {
+	initializeCudaMemory(size);
 	GLfloat* obj = (GLfloat*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	for (int i = 0; i < size;i++)
 		obj[i] = objectArr[i];

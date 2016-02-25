@@ -16,7 +16,7 @@ public:
 	ProcessorType getProcessorType() const;
 private:
 	RenderStrategy* selectedStrategy;
-	std::map<int, RenderStrategy*> Strategies;
+	RenderStrategy** Strategies;
 };
 
 

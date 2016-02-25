@@ -19,7 +19,11 @@ Engine::GameLooper::GameLooper(bool withCuda,GraphicLibraryWrapper* gLibrary)
 
 	addRenderingStrategy(Sequential, new RayTracingStrategySequential(0.8f, 20.0));
 	addRenderingStrategy(OpenMP, new RayTracingStrategyOpenMP(0.8f, 20.0));
-	addRenderingStrategy(CUDA, new RayTracingStrategyCUDA(0.8f, 20.0));
+	if (isCudaEnabled)
+	{
+		addRenderingStrategy(CUDA, new RayTracingStrategyCUDA(0.8f, 20.0));
+		gLibrary->initializeCuda();
+	}
 }
 
 Engine::GameLooper::~GameLooper()
@@ -51,7 +55,7 @@ void Engine::GameLooper::setProcessType(unsigned char key, void(*fnc)(char*))
 {
 	if (key == '1' || key == '2' || key == '3')
 	{
-		mRenderController.SetStrategy(RenderOptionNames((int)(key - '1')), fnc);
-		world.SetUpdateType(RenderOptionNames((int)(key - '1')));
+		if(mRenderController.SetStrategy(RenderOptionNames((int)(key - '1')), fnc));
+			world.SetUpdateType(RenderOptionNames((int)(key - '1')));
 	}
 }

@@ -1,6 +1,5 @@
 400 400 400
 -400 -400 -400
-1	supported object type
 ObjectType 	if(sphere)	x 	y 	z	r	Ambient(r,g,b) 	Diffuse(r,g,b) 	Specular(r,g,b)
 0				0	100 	150 	75	18 80 26	0 0.4 0.7 	82 23 32
 0				-100 	300 	75 	50	18 80 26	0.8 0.01 0.01 	82 23 32

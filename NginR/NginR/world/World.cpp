@@ -77,6 +77,11 @@ void World::InitGPUMemoryForObjects()
 	gLibrary->initializeCudaMemory(Objects.size() * 8 * sizeof(float));
 }
 
+void World::UnmapCUDAObjects()
+{
+	gLibrary->unMapObjects();
+}
+
 void World::AddLight(Vec3<float> pos, Color Ambient, Color Diffuse, Color Specular)
 {
 	AddLight(Light(pos,Ambient,Diffuse,Specular));
@@ -90,6 +95,12 @@ void World::AddLight(Light light)
 Light World::GetLight() const
 {
 	return lights[0];
+}
+
+
+float* World::GetCudaObjects() const
+{
+	return cudaObjects;
 }
 
 void World::UpdateObjects(ProcessorType pType)
@@ -132,8 +143,10 @@ void World::UpdateObjectsSequential()
 void World::UpdateObjectsCUDA()
 {
 	int objectSize = Objects.size();
-	gLibrary->updateObjectsAtCudaMemory([objectSize](float* objects)
+	float* &wow = cudaObjects;
+	gLibrary->updateObjectsAtCudaMemory([objectSize,&wow](float* objects)
 	{
+		wow = objects;
 		CudaUpdateObjects(objects, objectSize);
 	});
 }
@@ -170,23 +183,9 @@ void World::SetUpdateType(RenderOptionNames type)
 		if (type == CUDA)
 		{
 			float* objectArr = new float[Objects.size() * 8]; 
-			for (int i = 0; i < Objects.size(); i++)
-			{
-				Vec3<float> pos;
-				Color color;
-				float r;
-				bool toRight;
-				Objects[i]->getInfo(pos, r, color, toRight);
-				objectArr[i * 8] = pos.getX();
-				objectArr[i * 8 + 1] = pos.getY();
-				objectArr[i * 8 + 2] = pos.getZ();
-				objectArr[i * 8 + 3] = r;
-				objectArr[i * 8 + 4] = color.getR();
-				objectArr[i * 8 + 5] = color.getG();
-				objectArr[i * 8 + 6] = color.getB();
-				objectArr[i * 8 + 7] = toRight ? 1.0f : -1.0f;
-			}
-			gLibrary->copyObjectsFromCuda(objectArr, Objects.size() * 8);
+			
+			CopyToGPUArray(objectArr);
+			gLibrary->copyObjectsToCuda(objectArr, Objects.size() * 8);
 			delete objectArr;
 		}
 	}
@@ -202,7 +201,22 @@ int World::GetObjectSize() const
 template<class T>
 void World::CopyToGPUArray(T *obj)
 {
-	
+	for (int i = 0; i < Objects.size(); i++)
+	{
+		Vec3<float> pos;
+		Color color;
+		float r;
+		bool toRight;
+		Objects[i]->getInfo(pos, r, color, toRight);
+		obj[i * 8] = pos.getX();
+		obj[i * 8 + 1] = pos.getY();
+		obj[i * 8 + 2] = pos.getZ();
+		obj[i * 8 + 3] = r;
+		obj[i * 8 + 4] = color.getR();
+		obj[i * 8 + 5] = color.getG();
+		obj[i * 8 + 6] = color.getB();
+		obj[i * 8 + 7] = toRight ? 1.0f : -1.0f;
+	}
 }
 
 template<class T>
