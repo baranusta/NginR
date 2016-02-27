@@ -33,3 +33,4 @@ NginR/Debug/
 *.app
 
 NginR/x64/
+*.tlog
