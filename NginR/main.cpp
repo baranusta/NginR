@@ -59,6 +59,7 @@ int main()
 
 	mode = nullptr;
 	Engine::Engine Enginar;
+	addTexts(Enginar);
 	DemoGame mGame(true);
 	Enginar.setGame(&mGame);
 	Enginar.startEngine();
