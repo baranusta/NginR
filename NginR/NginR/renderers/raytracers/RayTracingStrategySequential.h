@@ -14,7 +14,7 @@ public:
 		this->name = "CPU";
 	}
 
-	void DrawNextFrame(World w, Vec3<int> ViewPort, unsigned int* dst)
+	void DrawNextFrame(World& w, Vec3<int> ViewPort, unsigned int* dst)
 	{
 		for (int i = -ViewPort.getY() / 2, k = 0; i < ViewPort.getY() / 2; i++, k++)
 		{

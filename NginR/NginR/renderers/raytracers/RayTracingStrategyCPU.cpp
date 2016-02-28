@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-void RayTracingStrategyCPU::IterateInnerLoop(World w, Vec3<int> ViewPort, int i, int k, unsigned int* dst)
+void RayTracingStrategyCPU::IterateInnerLoop(const World & w, Vec3<int> ViewPort, int i, int k, unsigned int* dst)
 {
 	for (int j = -ViewPort.getZ() / 2, t = 0; j < ViewPort.getZ() / 2; j++, t++)
 	{
@@ -32,10 +32,10 @@ void RayTracingStrategyCPU::IterateInnerLoop(World w, Vec3<int> ViewPort, int i,
 		}
 
 		if (minDist != 1000000)
-			dst[t * (int)ViewPort.getY() + k] = DetermineColor(w.GetLight(), ray, Normal, hitPoint, objectId, &Objects);
+			dst[t * (int)ViewPort.getY() + k] = DetermineColor(w.getLight(), ray, Normal, hitPoint, objectId, &Objects);
 		else
 		{
-			float ws = w.GetAmbient().rgbToInt();
+			float ws = w.getAmbient().rgbToInt();
 			dst[t * (int)ViewPort.getY() + k] = ws;
 
 		}

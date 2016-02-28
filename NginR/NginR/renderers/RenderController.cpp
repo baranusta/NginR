@@ -4,20 +4,30 @@
 RenderController::RenderController()
 {
 	selectedStrategy = nullptr;
-	Strategies = new RenderStrategy*[__EndOfNames__]();
+	Strategies = new RenderStrategy*[__RENDER_NAME_SIZE__]();
+	for (int i = 0; i < __RENDER_NAME_SIZE__; i++)
+		Strategies[i] = nullptr;
 }
 
 RenderController::~RenderController()
 {
 	selectedStrategy = nullptr;
-	for (int i = 0; i < __EndOfNames__;i++)
+	for (int i = 0; i < __RENDER_NAME_SIZE__; i++)
 		delete [] Strategies[i];
 	delete[] Strategies;
 }
 
 void RenderController::AddStrategy(RenderOptionNames key, RenderStrategy* strategy)
 {
-	Strategies[key] =  strategy;
+	if (key >= __RENDER_NAME_SIZE__)
+		throw Exception(NO_SUCH_RENDER_OPTION);
+	if (Strategies[key] != nullptr)
+	{
+		delete Strategies[key];
+		Strategies[key] = strategy;
+	}
+
+	Strategies[key] = strategy;
 }
 
 bool RenderController::SetStrategy(RenderOptionNames key, void (*fnc)(char*))
@@ -46,7 +56,7 @@ ProcessorType RenderController::getProcessorType() const
 	return selectedStrategy->getProcessorType();
 }
 
-void RenderController::Apply(World w, Vec3<int> ViewPort, unsigned int* dst) const
+void RenderController::Apply(World& w, Vec3<int> ViewPort, unsigned int* dst) const
 {
 	if (this->selectedStrategy == nullptr)
 		return;

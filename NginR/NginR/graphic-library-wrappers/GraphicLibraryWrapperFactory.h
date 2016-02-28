@@ -18,10 +18,12 @@ namespace Engine
 				return new OpenGLWrapper(width,height);
 				break;
 			case DirectX:
+				return nullptr;
 				break;
 			default:
 				break;
 			}
+			return nullptr;
 		}
 
 	};

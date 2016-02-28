@@ -2,68 +2,76 @@
 #include <cuda_runtime_api.h>
 #include <iostream>
 
-Engine::GameLooper* mLooper;
+Engine::Game* mainGame;
 std::vector<TextViewGL*> textViews;
-TextViewGL*Mode = nullptr;
-
 
 void keyboard_func(unsigned char key, int _x, int _y)
 {
-	mLooper->setProcessType(key, [](char* str){
-		Mode->SetText(str);
-	});
+	mainGame->keyboardEvent(key, _x, _y);
 }
-
 
 Engine::Engine::~Engine()
 {
 	delete graphicLib;
-	DeleteArray(textViews);
+	_deleteArray(textViews);
 }
 
 
-Engine::Engine::Engine(GraphicLibraryWrapper* mGraphicLib, bool startWithCuda) :
-	graphicLib(mGraphicLib), mainLooper(GameLooper(startWithCuda && isCudaAvailable(), mGraphicLib))
+
+Engine::Engine::Engine()
 {
-	mLooper = &mainLooper;
-	//Sequential is alreadyAdded.
-
-
-	textViews.push_back(new FrameTextViewGL(-0.95f, 0.88f));
-	Mode = new TextViewGL(-0.95f, 0.88f);
-	textViews.push_back(Mode);
-
-	initializeLoopFunctions();
-
-	keyboard_func('1', 0, 0);
-}
-void Engine::Engine::setTextViews(const std::vector<TextViewGL*>& textViewArr)
-{
-	textViews = textViewArr;
-	if (textViews.size() > 0)
-		Mode = textViews[0];
+	_constructEngine(OpenGL, true);
 }
 
-void Engine::Engine::startEngine()
+Engine::Engine::Engine(const GraphicLibraryName & libName, bool showFrame)
 {
-
-	World world(Color(0.3f,0.3f, 0.3f), graphicLib);
-
-	world.CreateWithFile("World.txt");
-	world.AddLight(Vec3<float>(0.f, 0.f, 500.f),
-		Color(0.1f, 0.1f, 0.1f),
-		Color(0.8f, 0.8f, 0.8f),
-		Color(1.f, 1.f, 1.f));
-	mainLooper.setWorld(world);
+	_constructEngine(libName, showFrame);
 }
 
-void Engine::Engine::playGame() const
+void Engine::Engine::setGame(Game* game)
 {
+	mainGame = game;
+	if (game->getCudaRequest() && _isCudaAvailable())
+	{
+		graphicLib->initializeCuda();
+	}
+	GameWrapper wrapper(game);
+	wrapper.world->setGraphicLibrary(graphicLib);
+}
+
+void Engine::Engine::addTextViews(const std::vector<TextViewGL*>& textViewArr)
+{
+	textViews.reserve(textViews.size() + textViewArr.size());
+	textViews.insert(textViews.end(),textViewArr.begin(),textViewArr.end());
+}
+
+// ReSharper disable once CppMemberFunctionMayBeStatic
+void Engine::Engine::startEngine() const
+{
+	if (mainGame == nullptr)
+	{
+		throw Exception(ENGINE_NO_GAME_EXCEPTION);
+	}
 	graphicLib->startMainLoop();
 }
 
 #pragma region private_methods
-bool Engine::Engine::isCudaAvailable() const
+
+void Engine::Engine::_constructEngine(const GraphicLibraryName& libName, bool showFrame)
+{
+	GraphicLibraryWrapperFactory gFactory;
+	graphicLib = gFactory.getGraphicLibrary(libName);
+
+	mainGame = nullptr;
+
+	if (showFrame)
+	{
+		textViews.push_back(new FrameTextViewGL(-0.95f, 0.88f));
+	}
+	_initializeLoopFunctions();
+}
+
+bool Engine::Engine::_isCudaAvailable() const
 {
 	int deviceCount = 0;
 	cudaGetDeviceCount(&deviceCount);
@@ -74,7 +82,7 @@ bool Engine::Engine::isCudaAvailable() const
 	return false;
 }
 
-void Engine::Engine::initializeLoopFunctions()
+void Engine::Engine::_initializeLoopFunctions()
 {
 	graphicLib->setTextDisplayFunction([]()
 	{
@@ -88,7 +96,7 @@ void Engine::Engine::initializeLoopFunctions()
 
 	graphicLib->setMainLoop([](unsigned int* dst)
 	{
-		mLooper->processNextFrame(dst);
+		mainGame->processNextFrame(dst);
 	});
 
 	graphicLib->setCleanupFunction([]()
@@ -98,7 +106,7 @@ void Engine::Engine::initializeLoopFunctions()
 }
 
 template <class T>
-void Engine::Engine::DeleteArray(std::vector<T> arr)
+void Engine::Engine::_deleteArray(std::vector<T> arr)
 {
 	for (T obj : arr)
 		delete obj;

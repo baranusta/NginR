@@ -3,7 +3,8 @@
 
 #include <vector>
 
-#include "GameLooper.h"
+#include "graphic-library-wrappers/GraphicLibraryWrapperFactory.h"
+#include "Game.h"
 #include "viewutils/FrameTextViewGL.h"
 
 namespace Engine
@@ -13,22 +14,21 @@ namespace Engine
 	class Engine
 	{
 	public:
-
-		explicit Engine(GraphicLibraryWrapper* mGraphicLib, bool startWithCuda);
+		explicit Engine();
+		explicit Engine(const GraphicLibraryName & libName, bool showFrame = true);
 		~Engine();
-		void setTextViews(const std::vector<TextViewGL*> & textViewArr);
-		void startEngine();
-
-		void playGame() const;
+		void setGame(Game* game);
+		void addTextViews(const std::vector<TextViewGL*> & textViewArr);
+		void startEngine() const;
 
 	private:
+		void _constructEngine(const GraphicLibraryName & libName, bool showFrame);
 		template <class T>
-		void DeleteArray(std::vector<T> arr);
-		bool isCudaAvailable() const;
-		void initializeLoopFunctions();
+		void _deleteArray(std::vector<T> arr);
+		bool _isCudaAvailable() const;
+		void _initializeLoopFunctions();
 
 		GraphicLibraryWrapper* graphicLib;
-		GameLooper mainLooper;
 	};
 
 
