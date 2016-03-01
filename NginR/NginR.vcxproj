@@ -184,7 +184,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NginR\Engine.cpp" />
-    <ClCompile Include="NginR\GameLooper.cpp" />
+    <ClCompile Include="NginR\Game.cpp" />
     <ClCompile Include="NginR\graphic-library-wrappers\GraphicLibraryWrapper.cpp" />
     <ClCompile Include="NginR\graphic-library-wrappers\opengl-wrapper\OpenGLWrapper.cpp" />
     <ClCompile Include="NginR\renderers\raytracers\RayTracingStrategyCPU.cpp" />
@@ -202,7 +202,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NginR\Engine.h" />
-    <ClInclude Include="NginR\GameLooper.h" />
+    <ClInclude Include="NginR\Game.h" />
     <ClInclude Include="NginR\graphic-library-wrappers\GraphicLibraryWrapper.h" />
     <ClInclude Include="NginR\graphic-library-wrappers\GraphicLibraryWrapperFactory.h" />
     <ClInclude Include="NginR\graphic-library-wrappers\opengl-wrapper\OpenGLWrapper.h" />
@@ -214,6 +214,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="NginR\renderers\RenderStrategy.h" />
     <ClInclude Include="NginR\utils\Color.h" />
     <ClInclude Include="NginR\utils\CommonEnums.h" />
+    <ClInclude Include="NginR\utils\Exception.h" />
     <ClInclude Include="NginR\utils\RandomGenerator.h" />
     <ClInclude Include="NginR\utils\Utils.h" />
     <ClInclude Include="NginR\utils\Vec3.h" />

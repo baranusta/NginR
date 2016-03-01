@@ -23,29 +23,32 @@ class World
 public:
 
 	World();
-	World(Color, Engine::GraphicLibraryWrapper* gLib);
+	World(Color);
 	~World();
-	void AddWorld(World);
-	void SetUpdateType(RenderOptionNames type);
-	void AddObject(GeometricObject*);
-	Light GetLight() const;
-	void UpdateObjects(ProcessorType pType);
-	int GetObjectSize() const;
-	Color GetAmbient() const;
-	float* GetCudaObjects() const;
+	void addWorld(World);
+	void addObject(GeometricObject*);
+	void addLight(Vec3<float> pos, Color Ambient, Color Diffuse, Color Specular);
+	void addLight(Light light);
 
-	bool CreateWithFile(std::string);
-	void SetCudaEnabled(bool isCudaEnabled);
-	void InitGPUMemoryForObjects();
-	void UnmapCUDAObjects();
+	void setGraphicLibrary(Engine::GraphicLibraryWrapper* library);
+	void setUpdateType(RenderOptionNames type);
+	void updateObjects(ProcessorType pType);
+
+	Light getLight() const;
+	int getObjectSize() const;
+	Color getAmbient() const;
+	float* getCudaObjects() const;
+
+	bool createWithFile(std::string);
+	void setCudaEnabled(bool isCudaEnabled);
+	void initGPUMemoryForObjects();
+	void unmapCUDAObjects();
 
 	template<class T>
 	void CopyToGPUArray(T *obj);
 	template<class T>
 	void CopyFromGPUArray(T *obj);
 
-	void AddLight(Vec3<float> pos, Color Ambient, Color Diffuse, Color Specular);
-	void AddLight(Light light);
 	//This will be removed
 	//when the raytracing strategies implemented
 	std::vector<GeometricObject*> GetObjects() const
@@ -54,18 +57,18 @@ public:
 	}
 
 private:
-	void UpdateObjectsSequential();
-	void UpdateObjectsCUDA();
-	void UpdateObjectsOpenMP();
+	void _updateObjectsSequential();
+	void _updateObjectsCUDA();
+	void _updateObjectsOpenMP();
 
-	void SetWorldBoundaries(Vec3<float> boundariesFCorner, Vec3<float> boundariesSCorner);
+	void _setWorldBoundaries(Vec3<float> boundariesFCorner, Vec3<float> boundariesSCorner);
 
 	bool isCUDAenabled;
 
 	RenderOptionNames updateType;
-	Color AmbientColor;
-
 	Engine::GraphicLibraryWrapper* gLibrary;
+
+	Color AmbientColor;
 
 	//Later This Will hold Light Objects
 	std::vector<Light> lights;

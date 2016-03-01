@@ -7,12 +7,13 @@ extern "C" void CudaUpdateObjects(float*, int);
 World::World()
 {
 	AmbientColor = Color(0,0,0);
+	gLibrary = nullptr;
 }
 
-World::World(Color c, Engine::GraphicLibraryWrapper* library)
+World::World(Color c)
 {
 	AmbientColor = c;
-	gLibrary = library;
+	gLibrary = nullptr;
 }
 
 World::~World()
@@ -21,27 +22,27 @@ World::~World()
 	lights.clear();
 }
 
-void World::AddWorld(World w)
+void World::addWorld(World w)
 {
 	for (Light light : w.lights)
-		this->AddLight(light);
+		this->addLight(light);
 	for (GeometricObject* object : w.Objects)
-		this->AddObject(object);
+		this->addObject(object);
 	if (isCUDAenabled && updateType != GPUCUDA)
-		InitGPUMemoryForObjects();
+		initGPUMemoryForObjects();
 }
 
-void World::AddObject(GeometricObject* p)
+void World::addObject(GeometricObject* p)
 {
 	Objects.push_back(p);
 }
 
-Color World::GetAmbient() const
+Color World::getAmbient() const
 {
 	return AmbientColor;
 }
 
-bool World::CreateWithFile(std::string fileName)
+bool World::createWithFile(std::string fileName)
 {
 	std::ifstream file(fileName);
 	if (file.is_open())
@@ -49,7 +50,7 @@ bool World::CreateWithFile(std::string fileName)
 		std::string line;
 		Vec3<float> fCorner,sCorner;
 		file >> fCorner >> sCorner;
-		SetWorldBoundaries(fCorner,sCorner);
+		_setWorldBoundaries(fCorner,sCorner);
 		file >> line;
 		//To pass explanation line in file
 		std::getline(file, line);
@@ -60,50 +61,55 @@ bool World::CreateWithFile(std::string fileName)
 		{
 			GeometricObject* object = factory.getGameObjectFromLine(line);
 			if (object!=nullptr)
-				AddObject(object);
+				addObject(object);
 		}
 		return true;
 	}
 	return false;
 }
 
-void World::SetCudaEnabled(bool isCudaEnabled)
+void World::setCudaEnabled(bool isCudaEnabled)
 {
 	isCUDAenabled = isCudaEnabled;
 }
 
-void World::InitGPUMemoryForObjects()
+void World::initGPUMemoryForObjects()
 {
 	gLibrary->initializeCudaMemory(Objects.size() * 8 * sizeof(float));
 }
 
-void World::UnmapCUDAObjects()
+void World::unmapCUDAObjects()
 {
 	gLibrary->unMapObjects();
 }
 
-void World::AddLight(Vec3<float> pos, Color Ambient, Color Diffuse, Color Specular)
+void World::addLight(Vec3<float> pos, Color Ambient, Color Diffuse, Color Specular)
 {
-	AddLight(Light(pos,Ambient,Diffuse,Specular));
+	addLight(Light(pos,Ambient,Diffuse,Specular));
 }
 
-void World::AddLight(Light light)
+void World::addLight(Light light)
 {
 	lights.push_back(light);
 }
 
-Light World::GetLight() const
+void World::setGraphicLibrary(Engine::GraphicLibraryWrapper* library)
+{
+	gLibrary = library;
+}
+
+Light World::getLight() const
 {
 	return lights[0];
 }
 
 
-float* World::GetCudaObjects() const
+float* World::getCudaObjects() const
 {
 	return cudaObjects;
 }
 
-void World::UpdateObjects(ProcessorType pType)
+void World::updateObjects(ProcessorType pType)
 {
 	switch (pType)
 	{
@@ -111,36 +117,36 @@ void World::UpdateObjects(ProcessorType pType)
 		switch (updateType)
 		{
 		case Sequential:
-			UpdateObjectsSequential();
+			_updateObjectsSequential();
 			break;
 		case OpenMP:
-			UpdateObjectsOpenMP(); 
+			_updateObjectsOpenMP(); 
 			break;
 		default:
-			UpdateObjectsSequential(); 
+			_updateObjectsSequential(); 
 			break;
 		}
 		break;
 	case GPUCUDA:
-		UpdateObjectsCUDA();
+		_updateObjectsCUDA();
 		break;
 	}
 }
 
-void World::UpdateObjectsOpenMP()
+void World::_updateObjectsOpenMP()
 {
 	#pragma omp parallel for schedule(static)
 	for (int i = 0; i< Objects.size(); i++)
 		Objects[i]->Move();
 }
 
-void World::UpdateObjectsSequential()
+void World::_updateObjectsSequential()
 {
 	for (GeometricObject* object : Objects)
 		object->Move();
 }
 
-void World::UpdateObjectsCUDA()
+void World::_updateObjectsCUDA()
 {
 	int objectSize = Objects.size();
 	float* &wow = cudaObjects;
@@ -151,7 +157,7 @@ void World::UpdateObjectsCUDA()
 	});
 }
 
-void World::SetUpdateType(RenderOptionNames type)
+void World::setUpdateType(RenderOptionNames type)
 {
 	if (updateType==CUDA)
 	{
@@ -192,7 +198,7 @@ void World::SetUpdateType(RenderOptionNames type)
 	updateType = type;
 }
 
-int World::GetObjectSize() const
+int World::getObjectSize() const
 {
 	return Objects.size();
 }
@@ -240,7 +246,7 @@ void World::CopyFromGPUArray(T *obj)
 	}
 }
 
-void World::SetWorldBoundaries(Vec3<float> boundariesFCorner, Vec3<float> boundariesSCorner)
+void World::_setWorldBoundaries(Vec3<float> boundariesFCorner, Vec3<float> boundariesSCorner)
 {
 	
 }

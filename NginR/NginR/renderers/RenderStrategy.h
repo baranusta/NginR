@@ -16,7 +16,7 @@ public:
 		delete name;
 	}
 
-	virtual void DrawNextFrame(World w, Vec3<int> ViewPort, unsigned int* dst) = 0;
+	virtual void DrawNextFrame(World& w, Vec3<int> ViewPort, unsigned int* dst) = 0;
 	
 	char* GetName() const
 	{

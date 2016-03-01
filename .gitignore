@@ -35,3 +35,4 @@ NginR/Debug/
 NginR/x64/
 *.tlog
 ipch/
+x64/
