@@ -1,0 +1,15 @@
+os: Visual Studio 2013
+install:
+  - ps: Start-FileDownload 'https://dl.dropboxusercontent.com/u/33940399/baran/NginR-deps.zip'
+  - 7z x NginR-deps.zip -oC:\projects\nginr\NginR
+  - ps: Start-FileDownload 'http://developer.download.nvidia.com/compute/cuda/7_0/Prod/local_installers/cuda_7.0.28_windows.exe'
+  - "cuda_7.0.28_windows.exe -s CUDAToolkit_7.0"
+  - "cuda_7.0.28_windows.exe -s CUDAVisualStudioIntegration_7.0"
+configuration: Release
+branches:
+  only:
+    - appveyor
+
+build:
+  project: NginR.sln       
+  verbosity: minimal
