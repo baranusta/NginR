@@ -1,7 +1,7 @@
 os: Visual Studio 2013
 install:
   - ps: Start-FileDownload 'http://developer.download.nvidia.com/compute/cuda/7_0/Prod/local_installers/cuda_7.0.28_windows.exe'
-  - cuda_7.0.28_windows.exe /SILENT /NORESTART /SP-
+  - "cuda_7.0.28_windows.exe /SILENT /NORESTART /SP-"
   - ps: Start-FileDownload 'https://dl.dropboxusercontent.com/u/33940399/baran/NginR-deps.zip'
   - 7z x NginR-deps.zip -o%APPVEYOR_BUILD_FOLDER%\NginR
   - set PATH=C:\Program Files (x86)\MSBuild\12.0\Bin;%PATH%
