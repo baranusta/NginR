@@ -79,12 +79,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\NginR\NginR\;$(ProjectDir)\..\NginR\NginR\lib\inc\</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)\..\x64\Debug\;$(ProjectDir)\..\NginR\NginR\lib\lib\x64\;$(CudaToolkitLibDir)</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\NginR\;$(ProjectDir)\..\NginR\lib\inc\</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)\..\x64\Debug\;$(ProjectDir)\..\NginR\lib\lib\x64\;$(CudaToolkitLibDir)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)\..\x64\Release\;$(ProjectDir)\..\NginR\NginR\lib\lib\x64\;$(CudaToolkitLibDir)</LibraryPath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\NginR\NginR\;$(ProjectDir)\..\NginR\NginR\lib\inc\</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)\..\x64\Release\;$(ProjectDir)\..\NginR\lib\lib\x64\;$(CudaToolkitLibDir)</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\..\NginR\;$(ProjectDir)\..\NginR\lib\inc\</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

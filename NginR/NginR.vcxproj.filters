@@ -1,60 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CudaCompile Include="NginR\renderers\raytracers\RayTrace.cu">
-      <Filter>engine\renderers\raytracers</Filter>
-    </CudaCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="NginR\utils\Color.cpp">
-      <Filter>engine\utils</Filter>
+    <ClCompile Include="Game.cpp">
+      <Filter>engine</Filter>
     </ClCompile>
-    <ClCompile Include="NginR\utils\Vec3.cpp">
-      <Filter>engine\utils</Filter>
+    <ClCompile Include="Engine.cpp">
+      <Filter>engine</Filter>
     </ClCompile>
-    <ClCompile Include="NginR\utils\FileReading.cpp">
-      <Filter>engine\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="NginR\viewutils\TextViewGL.cpp">
+    <ClCompile Include="viewutils\TextViewGL.cpp">
       <Filter>engine\viewutils</Filter>
     </ClCompile>
-    <ClCompile Include="NginR\renderers\RenderController.cpp">
+    <ClCompile Include="utils\FileReading.cpp">
+      <Filter>engine\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\Vec3.cpp">
+      <Filter>engine\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\Color.cpp">
+      <Filter>engine\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="renderers\RenderController.cpp">
       <Filter>engine\renderers</Filter>
     </ClCompile>
-    <ClCompile Include="NginR\renderers\raytracers\RayTracingStrategyCPU.cpp">
+    <ClCompile Include="renderers\raytracers\RayTracingStrategyCUDA.cpp">
       <Filter>engine\renderers\raytracers</Filter>
     </ClCompile>
-    <ClCompile Include="NginR\renderers\raytracers\RayTracingStrategyCUDA.cpp">
+    <ClCompile Include="renderers\raytracers\RayTracingStrategyCPU.cpp">
       <Filter>engine\renderers\raytracers</Filter>
     </ClCompile>
-    <ClCompile Include="NginR\graphic-library-wrappers\GraphicLibraryWrapper.cpp">
+    <ClCompile Include="graphic-library-wrappers\GraphicLibraryWrapper.cpp">
       <Filter>engine\graphic-library-wrappers</Filter>
     </ClCompile>
-    <ClCompile Include="NginR\graphic-library-wrappers\opengl-wrapper\OpenGLWrapper.cpp">
+    <ClCompile Include="graphic-library-wrappers\opengl-wrapper\OpenGLWrapper.cpp">
       <Filter>engine\graphic-library-wrappers\opengl-wrapper</Filter>
     </ClCompile>
-    <ClCompile Include="NginR\world\objects-gpu\SphereGPU.cpp">
-      <Filter>engine\world\objects-gpu</Filter>
-    </ClCompile>
-    <ClCompile Include="NginR\world\objects-cpu\light\Light.cpp">
-      <Filter>engine\world\objects-cpu\light</Filter>
-    </ClCompile>
-    <ClCompile Include="NginR\world\objects-cpu\game-objects\Sphere.cpp">
-      <Filter>engine\world\objects-cpu\game-objects</Filter>
-    </ClCompile>
-    <ClCompile Include="NginR\world\World.cpp">
+    <ClCompile Include="world\World.cpp">
       <Filter>engine\world</Filter>
     </ClCompile>
-    <ClCompile Include="NginR\Engine.cpp">
-      <Filter>engine</Filter>
+    <ClCompile Include="world\objects-gpu\SphereGPU.cpp">
+      <Filter>engine\world\objects-gpu</Filter>
     </ClCompile>
-    <ClCompile Include="NginR\world\objects-cpu\game-objects\GeometricObject.cpp">
+    <ClCompile Include="world\objects-cpu\light\Light.cpp">
+      <Filter>engine\world\objects-cpu\light</Filter>
+    </ClCompile>
+    <ClCompile Include="world\objects-cpu\game-objects\Sphere.cpp">
       <Filter>engine\world\objects-cpu\game-objects</Filter>
     </ClCompile>
-    <ClCompile Include="NginR\Game.cpp">
-      <Filter>engine</Filter>
+    <ClCompile Include="world\objects-cpu\game-objects\GeometricObject.cpp">
+      <Filter>engine\world\objects-cpu\game-objects</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="engine">
@@ -98,86 +92,91 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NginR\utils\Color.h">
-      <Filter>engine\utils</Filter>
+    <ClInclude Include="Engine.h">
+      <Filter>engine</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\utils\CommonEnums.h">
-      <Filter>engine\utils</Filter>
+    <ClInclude Include="Game.h">
+      <Filter>engine</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\utils\Vec3.h">
-      <Filter>engine\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="NginR\utils\RandomGenerator.h">
-      <Filter>engine\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="NginR\viewutils\FrameTextViewGL.h">
+    <ClInclude Include="viewutils\TextViewGL.h">
       <Filter>engine\viewutils</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\viewutils\TextViewGL.h">
+    <ClInclude Include="viewutils\FrameTextViewGL.h">
       <Filter>engine\viewutils</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\renderers\RenderStrategy.h">
+    <ClInclude Include="utils\CommonEnums.h">
+      <Filter>engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\Exception.h">
+      <Filter>engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\RandomGenerator.h">
+      <Filter>engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\Utils.h">
+      <Filter>engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\Vec3.h">
+      <Filter>engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\Color.h">
+      <Filter>engine\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\RenderController.h">
       <Filter>engine\renderers</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\renderers\RenderController.h">
+    <ClInclude Include="renderers\RenderStrategy.h">
       <Filter>engine\renderers</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\renderers\raytracers\RayTracingStrategyCPU.h">
+    <ClInclude Include="renderers\raytracers\RayTracingStrategyCUDA.h">
       <Filter>engine\renderers\raytracers</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\renderers\raytracers\RayTracingStrategyCUDA.h">
+    <ClInclude Include="renderers\raytracers\RayTracingStrategySequential.h">
       <Filter>engine\renderers\raytracers</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\renderers\raytracers\RayTracingStrategySequential.h">
+    <ClInclude Include="renderers\raytracers\RayTracingStratingOpenMP.h">
       <Filter>engine\renderers\raytracers</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\renderers\raytracers\RayTracingStratingOpenMP.h">
+    <ClInclude Include="renderers\raytracers\RayTracingStrategyCPU.h">
       <Filter>engine\renderers\raytracers</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\graphic-library-wrappers\GraphicLibraryWrapper.h">
+    <ClInclude Include="graphic-library-wrappers\GraphicLibraryWrapper.h">
       <Filter>engine\graphic-library-wrappers</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\graphic-library-wrappers\GraphicLibraryWrapperFactory.h">
+    <ClInclude Include="graphic-library-wrappers\GraphicLibraryWrapperFactory.h">
       <Filter>engine\graphic-library-wrappers</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\graphic-library-wrappers\opengl-wrapper\OpenGLWrapper.h">
+    <ClInclude Include="graphic-library-wrappers\opengl-wrapper\OpenGLWrapper.h">
       <Filter>engine\graphic-library-wrappers\opengl-wrapper</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\world\objects-gpu\SphereGPU.h">
-      <Filter>engine\world\objects-gpu</Filter>
-    </ClInclude>
-    <ClInclude Include="NginR\world\objects-cpu\camera\Camera.h">
-      <Filter>engine\world\objects-cpu\camera</Filter>
-    </ClInclude>
-    <ClInclude Include="NginR\world\objects-cpu\light\Light.h">
-      <Filter>engine\world\objects-cpu\light</Filter>
-    </ClInclude>
-    <ClInclude Include="NginR\world\objects-cpu\light\DirectedLight.h">
-      <Filter>engine\world\objects-cpu\light</Filter>
-    </ClInclude>
-    <ClInclude Include="NginR\world\objects-cpu\game-objects\Sphere.h">
-      <Filter>engine\world\objects-cpu\game-objects</Filter>
-    </ClInclude>
-    <ClInclude Include="NginR\world\World.h">
+    <ClInclude Include="world\World.h">
       <Filter>engine\world</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\Engine.h">
-      <Filter>engine</Filter>
+    <ClInclude Include="world\objects-gpu\SphereGPU.h">
+      <Filter>engine\world\objects-gpu</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\utils\Utils.h">
-      <Filter>engine\utils</Filter>
+    <ClInclude Include="world\objects-cpu\light\Light.h">
+      <Filter>engine\world\objects-cpu\light</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\world\objects-cpu\game-objects\GeometricObject.h">
+    <ClInclude Include="world\objects-cpu\light\DirectedLight.h">
+      <Filter>engine\world\objects-cpu\light</Filter>
+    </ClInclude>
+    <ClInclude Include="world\objects-cpu\game-objects\GeometricObject.h">
       <Filter>engine\world\objects-cpu\game-objects</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\world\objects-cpu\game-objects\GameObjectFactory.h">
+    <ClInclude Include="world\objects-cpu\game-objects\Sphere.h">
       <Filter>engine\world\objects-cpu\game-objects</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\Game.h">
-      <Filter>engine</Filter>
+    <ClInclude Include="world\objects-cpu\game-objects\GameObjectFactory.h">
+      <Filter>engine\world\objects-cpu\game-objects</Filter>
     </ClInclude>
-    <ClInclude Include="NginR\utils\Exception.h">
-      <Filter>engine\utils</Filter>
+    <ClInclude Include="world\objects-cpu\camera\Camera.h">
+      <Filter>engine\world\objects-cpu\camera</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="renderers\raytracers\RayTrace.cu">
+      <Filter>engine\renderers\raytracers</Filter>
+    </CudaCompile>
   </ItemGroup>
 </Project>

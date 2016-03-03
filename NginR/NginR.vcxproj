@@ -71,12 +71,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(CudaToolkitLibDir);$(ProjectDir)\NginR\lib\lib\x64;</LibraryPath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\NginR\lib\inc</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(CudaToolkitLibDir);$(ProjectDir)\lib\lib\x64;</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\lib\inc</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(CudaToolkitLibDir);$(ProjectDir)\NginR\lib\lib\x64;</LibraryPath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\NginR\lib\inc</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(CudaToolkitLibDir);$(ProjectDir)\lib\lib\x64;</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\lib\inc</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -108,7 +108,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\NginR\lib\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <BrowseInformation>true</BrowseInformation>
       <ProgramDataBaseFileName>..\$(IntDir)Nginr.pdb</ProgramDataBaseFileName>
@@ -197,55 +197,54 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="NginR\renderers\raytracers\RayTrace.cu" />
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="graphic-library-wrappers\GraphicLibraryWrapper.cpp" />
+    <ClCompile Include="graphic-library-wrappers\opengl-wrapper\OpenGLWrapper.cpp" />
+    <ClCompile Include="renderers\raytracers\RayTracingStrategyCPU.cpp" />
+    <ClCompile Include="renderers\raytracers\RayTracingStrategyCUDA.cpp" />
+    <ClCompile Include="renderers\RenderController.cpp" />
+    <ClCompile Include="utils\Color.cpp" />
+    <ClCompile Include="utils\FileReading.cpp" />
+    <ClCompile Include="utils\Vec3.cpp" />
+    <ClCompile Include="viewutils\TextViewGL.cpp" />
+    <ClCompile Include="world\objects-cpu\game-objects\GeometricObject.cpp" />
+    <ClCompile Include="world\objects-cpu\game-objects\Sphere.cpp" />
+    <ClCompile Include="world\objects-cpu\light\Light.cpp" />
+    <ClCompile Include="world\objects-gpu\SphereGPU.cpp" />
+    <ClCompile Include="world\World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="NginR\Engine.cpp" />
-    <ClCompile Include="NginR\Game.cpp" />
-    <ClCompile Include="NginR\graphic-library-wrappers\GraphicLibraryWrapper.cpp" />
-    <ClCompile Include="NginR\graphic-library-wrappers\opengl-wrapper\OpenGLWrapper.cpp" />
-    <ClCompile Include="NginR\renderers\raytracers\RayTracingStrategyCPU.cpp" />
-    <ClCompile Include="NginR\renderers\raytracers\RayTracingStrategyCUDA.cpp" />
-    <ClCompile Include="NginR\renderers\RenderController.cpp" />
-    <ClCompile Include="NginR\utils\Color.cpp" />
-    <ClCompile Include="NginR\utils\FileReading.cpp" />
-    <ClCompile Include="NginR\utils\Vec3.cpp" />
-    <ClCompile Include="NginR\viewutils\TextViewGL.cpp" />
-    <ClCompile Include="NginR\world\objects-cpu\game-objects\GeometricObject.cpp" />
-    <ClCompile Include="NginR\world\objects-cpu\game-objects\Sphere.cpp" />
-    <ClCompile Include="NginR\world\objects-cpu\light\Light.cpp" />
-    <ClCompile Include="NginR\world\objects-gpu\SphereGPU.cpp" />
-    <ClCompile Include="NginR\world\World.cpp" />
+    <ClInclude Include="Engine.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="graphic-library-wrappers\GraphicLibraryWrapper.h" />
+    <ClInclude Include="graphic-library-wrappers\GraphicLibraryWrapperFactory.h" />
+    <ClInclude Include="graphic-library-wrappers\opengl-wrapper\OpenGLWrapper.h" />
+    <ClInclude Include="renderers\raytracers\RayTracingStrategyCPU.h" />
+    <ClInclude Include="renderers\raytracers\RayTracingStrategyCUDA.h" />
+    <ClInclude Include="renderers\raytracers\RayTracingStrategySequential.h" />
+    <ClInclude Include="renderers\raytracers\RayTracingStratingOpenMP.h" />
+    <ClInclude Include="renderers\RenderController.h" />
+    <ClInclude Include="renderers\RenderStrategy.h" />
+    <ClInclude Include="utils\Color.h" />
+    <ClInclude Include="utils\CommonEnums.h" />
+    <ClInclude Include="utils\Exception.h" />
+    <ClInclude Include="utils\RandomGenerator.h" />
+    <ClInclude Include="utils\Utils.h" />
+    <ClInclude Include="utils\Vec3.h" />
+    <ClInclude Include="viewutils\FrameTextViewGL.h" />
+    <ClInclude Include="viewutils\TextViewGL.h" />
+    <ClInclude Include="world\objects-cpu\camera\Camera.h" />
+    <ClInclude Include="world\objects-cpu\game-objects\GameObjectFactory.h" />
+    <ClInclude Include="world\objects-cpu\game-objects\GeometricObject.h" />
+    <ClInclude Include="world\objects-cpu\game-objects\Sphere.h" />
+    <ClInclude Include="world\objects-cpu\light\DirectedLight.h" />
+    <ClInclude Include="world\objects-cpu\light\Light.h" />
+    <ClInclude Include="world\objects-gpu\SphereGPU.h" />
+    <ClInclude Include="world\World.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NginR\Engine.h" />
-    <ClInclude Include="NginR\Game.h" />
-    <ClInclude Include="NginR\graphic-library-wrappers\GraphicLibraryWrapper.h" />
-    <ClInclude Include="NginR\graphic-library-wrappers\GraphicLibraryWrapperFactory.h" />
-    <ClInclude Include="NginR\graphic-library-wrappers\opengl-wrapper\OpenGLWrapper.h" />
-    <ClInclude Include="NginR\renderers\raytracers\RayTracingStrategyCPU.h" />
-    <ClInclude Include="NginR\renderers\raytracers\RayTracingStrategyCUDA.h" />
-    <ClInclude Include="NginR\renderers\raytracers\RayTracingStrategySequential.h" />
-    <ClInclude Include="NginR\renderers\raytracers\RayTracingStratingOpenMP.h" />
-    <ClInclude Include="NginR\renderers\RenderController.h" />
-    <ClInclude Include="NginR\renderers\RenderStrategy.h" />
-    <ClInclude Include="NginR\utils\Color.h" />
-    <ClInclude Include="NginR\utils\CommonEnums.h" />
-    <ClInclude Include="NginR\utils\Exception.h" />
-    <ClInclude Include="NginR\utils\RandomGenerator.h" />
-    <ClInclude Include="NginR\utils\Utils.h" />
-    <ClInclude Include="NginR\utils\Vec3.h" />
-    <ClInclude Include="NginR\viewutils\FrameTextViewGL.h" />
-    <ClInclude Include="NginR\viewutils\TextViewGL.h" />
-    <ClInclude Include="NginR\world\objects-cpu\camera\Camera.h" />
-    <ClInclude Include="NginR\world\objects-cpu\game-objects\GameObjectFactory.h" />
-    <ClInclude Include="NginR\world\objects-cpu\game-objects\GeometricObject.h" />
-    <ClInclude Include="NginR\world\objects-cpu\game-objects\Sphere.h" />
-    <ClInclude Include="NginR\world\objects-cpu\light\DirectedLight.h" />
-    <ClInclude Include="NginR\world\objects-cpu\light\Light.h" />
-    <ClInclude Include="NginR\world\objects-gpu\SphereGPU.h" />
-    <ClInclude Include="NginR\world\World.h" />
+    <CudaCompile Include="renderers\raytracers\RayTrace.cu" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
