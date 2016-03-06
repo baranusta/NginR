@@ -1,28 +1,17 @@
 #include "catch.hpp"
 #include <Engine.h>
-
-class EngineTester
-{
-public:
-	EngineTester()
-	{
-		wow = new Engine::Engine();
-	}
-private:
-	Engine::Engine* wow;
-};
+#include <iostream>
 
 TEST_CASE("Engine is under test") {
-	EngineTester t;
-	REQUIRE(true);
+	Engine::Engine t;
 	SECTION("Engine started without game should throw exception") {
-		REQUIRE(true);
-		/*try{
-			Enginar.startEngine();
+		try{
+			t.startEngine();
 		}
-		catch (Exception const & exception)
+		catch (Exception & exception)
 		{
-			REQUIRE(exception.what() == ENGINE_NO_GAME_EXCEPTION);
-		}*/
+			std::string message = exception.what();
+			REQUIRE(message == ENGINE_NO_GAME_EXCEPTION);
+		}
 	}
 }

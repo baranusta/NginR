@@ -11,10 +11,10 @@ public:
 	T getX();
 	T getY();
 	T getZ();
-	Vec3 operator-(Vec3 rhs);
-	Vec3 operator+(Vec3 rhs);
+	Vec3 operator-(const Vec3 & rhs);
+	Vec3 operator+(const Vec3 & rhs);
 	void rotate(Vec3 angle);
-	T dotProduct(Vec3 vec);
+	T dotProduct(const Vec3 & vec);
 
 private:
 	T x;

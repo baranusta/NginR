@@ -80,7 +80,7 @@ void Sphere::Move()
 	center = Vec3<float>(center.getX(), center.getY() + t, center.getZ());
 }
 
-bool Sphere::isRayIntersects(Vec3<float> ray, Vec3<float> src, Vec3<float>& Normal, Vec3<float> & Point, float &dist)
+bool Sphere::isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float>& Normal, Vec3<float> & Point, float &dist)
 {
 	float a = 1;
 	float b = 2 * (ray.getX() *(src.getX() - center.getX()) + ray.getY() *(src.getY() - center.getY()) + ray.getZ() *(src.getZ() - center.getZ()));
@@ -125,6 +125,18 @@ int Sphere::nextPos(Vec3<float> p)
 	if (center.getZ() > p.getZ())
 		pos += 1;
 	return pos;
+}
+
+bool Sphere::_checkDimension(float target, float src, float dim2Max, float dim2Min)
+{ 
+	return target < 0 ? src >= dim2Min : src <= dim2Max;
+}
+
+bool Sphere::_isPossibleToIntersect(Vec3<float> & ray, Vec3<float> & src)
+{
+	return _checkDimension(ray.getX(), src.getX(), getMaxX(), getMinX())
+		&& _checkDimension(ray.getX(), src.getX(), getMaxX(), getMinX())
+		&& _checkDimension(ray.getX(), src.getX(), getMaxX(), getMinX());
 }
 
 bool Sphere::shouldExist()

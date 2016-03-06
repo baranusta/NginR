@@ -32,19 +32,19 @@ Vec3<T>::Vec3(T xPos, T yPos, T zPos)
 }
 
 template <typename T>
-Vec3<T> Vec3<T>::operator-(Vec3 rhs)
+Vec3<T> Vec3<T>::operator-(const Vec3 & rhs)
 {
 	return Vec3(x - rhs.x, y - rhs.y, z - rhs.z);
 }
 
 template <typename T>
-Vec3<T> Vec3<T>::operator+(Vec3 rhs)
+Vec3<T> Vec3<T>::operator+(const Vec3 & rhs)
 {
 	return Vec3(x + rhs.x, y + rhs.y, z + rhs.z);
 }
 
 template <typename T>
-T Vec3<T>::dotProduct(Vec3 vec)
+T Vec3<T>::dotProduct(const Vec3 & vec)
 {
 	return x*vec.x + y*vec.y + z*vec.z;
 }

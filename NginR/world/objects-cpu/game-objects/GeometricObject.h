@@ -26,7 +26,7 @@ public:
 	Color getAmbient() const;
 	Color getSpecular() const;
 	int getId() const;
-	virtual bool isRayIntersects(Vec3<float> ray, Vec3<float> src, Vec3<float>&, Vec3<float> & Point, float& dist) = 0;
+	virtual bool isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float>&, Vec3<float> & Point, float& dist) = 0;
 
 	virtual int nextPos(Vec3<float> p) = 0;
 protected:

@@ -42,10 +42,9 @@ void RayTracingStrategyCPU::IterateInnerLoop(const World & w, Vec3<int> ViewPort
 		//World->SendRay(collidedObj,size,ray,eyePos,Objects);
 		//Color pixelC = DetermineColor(collidedObj,size);
 	}
-
 }
 
-int RayTracingStrategyCPU::DetermineColor(Light light, Vec3<float> ray, Vec3<float> Normal, Vec3<float> hitPoint, int objId, std::vector<GeometricObject*>* Objects)
+int RayTracingStrategyCPU::DetermineColor(Light& light, Vec3<float>& ray, Vec3<float>& Normal, Vec3<float>& hitPoint, int objId, std::vector<GeometricObject*>* Objects) const
 {
 	Vec3<float> lightPos = light.getPos();
 	Vec3<float> SourceToLight = lightPos - hitPoint;

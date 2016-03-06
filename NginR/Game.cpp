@@ -31,6 +31,11 @@ void Engine::Game::addWorld(const World & w)
 	this->world->addWorld(w);
 }
 
+void Engine::Game::addObject(GeometricObject& object)
+{
+	world->addObject(&object);
+}
+
 void Engine::Game::addRenderingStrategy(RenderOptionNames rType, RenderStrategy* strategy)
 {
 	mRenderController.AddStrategy(rType, strategy);

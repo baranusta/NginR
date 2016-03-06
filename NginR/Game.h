@@ -27,6 +27,7 @@ namespace Engine
 
 		void setWorld(World* w);
 		void addWorld(const World & w);
+		void addObject(GeometricObject & object);
 		void addRenderingStrategy(RenderOptionNames rType, RenderStrategy* strategy);
 		void processNextFrame(unsigned int* dst = nullptr);
 		void setProcessType(unsigned char key, void(*fnc)(char*));

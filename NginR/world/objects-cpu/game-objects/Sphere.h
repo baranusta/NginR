@@ -21,11 +21,15 @@ public:
 	bool shouldExist();
 	void Move();
 	void getInfo(Vec3<float>&, float &r, Color& c, bool&);
-	bool isRayIntersects(Vec3<float> ray, Vec3<float> src, Vec3<float>&, Vec3<float> & Point, float& dist);
+	bool isRayIntersects(Vec3<float> & ray , Vec3<float> & src, Vec3<float>&, Vec3<float> & Point, float& dist);
 	bool isIntersects(Vec3<float> p);
 	int nextPos(Vec3<float> p);
 
 private:
+
+	bool _checkDimension(float target, float src, float dim2Max, float dim2Min);
+	bool _isPossibleToIntersect(Vec3<float>& ray, Vec3<float>& src);
+
 	Vec3<float> center;
 	float radius;
 };
