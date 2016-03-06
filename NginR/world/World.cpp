@@ -170,15 +170,15 @@ void World::setUpdateType(RenderOptionNames type)
 				Color color;
 				float r;
 				bool toRight;
-				Objects[i]->getInfo(pos, r, color, toRight);
-				objectArr[i * 8] = pos.getX();
-				objectArr[i * 8 + 1] = pos.getY();
-				objectArr[i * 8 + 2] = pos.getZ();
-				objectArr[i * 8 + 3] = r;
-				objectArr[i * 8 + 4] = color.getR();
-				objectArr[i * 8 + 5] = color.getG();
-				objectArr[i * 8 + 6] = color.getB();
-				objectArr[i * 8 + 7] = toRight ? 1.0f : -1.0f;
+				//Objects[i]->getInfo(pos, r, color, toRight);
+				//objectArr[i * 8] = pos.getX();
+				//objectArr[i * 8 + 1] = pos.getY();
+				//objectArr[i * 8 + 2] = pos.getZ();
+				//objectArr[i * 8 + 3] = r;
+				//objectArr[i * 8 + 4] = color.getR();
+				//objectArr[i * 8 + 5] = color.getG();
+				//objectArr[i * 8 + 6] = color.getB();
+				//objectArr[i * 8 + 7] = toRight ? 1.0f : -1.0f;
 			}
 			gLibrary->copyObjectsFromCuda(objectArr, Objects.size() * 8);
 			delete objectArr;
@@ -213,15 +213,15 @@ void World::CopyToGPUArray(T *obj)
 		Color color;
 		float r;
 		bool toRight;
-		Objects[i]->getInfo(pos, r, color, toRight);
-		obj[i * 8] = pos.getX();
-		obj[i * 8 + 1] = pos.getY();
-		obj[i * 8 + 2] = pos.getZ();
-		obj[i * 8 + 3] = r;
-		obj[i * 8 + 4] = color.getR();
-		obj[i * 8 + 5] = color.getG();
-		obj[i * 8 + 6] = color.getB();
-		obj[i * 8 + 7] = toRight ? 1.0f : -1.0f;
+		//Objects[i]->getInfo(pos, r, color, toRight);
+		//obj[i * 8] = pos.getX();
+		//obj[i * 8 + 1] = pos.getY();
+		//obj[i * 8 + 2] = pos.getZ();
+		//obj[i * 8 + 3] = r;
+		//obj[i * 8 + 4] = color.getR();
+		//obj[i * 8 + 5] = color.getG();
+		//obj[i * 8 + 6] = color.getB();
+		//obj[i * 8 + 7] = toRight ? 1.0f : -1.0f;
 	}
 }
 
@@ -234,15 +234,15 @@ void World::CopyFromGPUArray(T *obj)
 		Color color;
 		float r;
 		bool toRight;
-		Objects[i]->getInfo(pos, r, color, toRight);
-		obj[i * 8] = pos.getX();
-		obj[i * 8 + 1] = pos.getY();
-		obj[i * 8 + 2] = pos.getZ();
-		obj[i * 8 + 3] = r;
-		obj[i * 8 + 4] = color.getR();
-		obj[i * 8 + 5] = color.getG();
-		obj[i * 8 + 6] = color.getB();
-		obj[i * 8 + 7] = toRight ? 1.0f : -1.0f;
+		//Objects[i]->getInfo(pos, r, color, toRight);
+		//obj[i * 8] = pos.getX();
+		//obj[i * 8 + 1] = pos.getY();
+		//obj[i * 8 + 2] = pos.getZ();
+		//obj[i * 8 + 3] = r;
+		//obj[i * 8 + 4] = color.getR();
+		//obj[i * 8 + 5] = color.getG();
+		//obj[i * 8 + 6] = color.getB();
+		//obj[i * 8 + 7] = toRight ? 1.0f : -1.0f;
 	}
 }
 

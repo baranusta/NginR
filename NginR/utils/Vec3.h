@@ -8,13 +8,17 @@ public:
 	Vec3();
 	Vec3(T xPos, T yPos, T zPos);
 	void Normalize();
-	T getX();
-	T getY();
-	T getZ();
+	T getX() const;
+	T getY() const;
+	T getZ() const;
 	Vec3 operator-(const Vec3 & rhs);
 	Vec3 operator+(const Vec3 & rhs);
+
+	bool operator==(const Vec3& rhs) const;
+
 	void rotate(Vec3 angle);
 	T dotProduct(const Vec3 & vec);
+	void crossProduct(Vec3<T> vec3);
 
 private:
 	T x;

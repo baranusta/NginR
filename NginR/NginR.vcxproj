@@ -210,6 +210,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClCompile Include="viewutils\TextViewGL.cpp" />
     <ClCompile Include="world\objects-cpu\game-objects\GeometricObject.cpp" />
     <ClCompile Include="world\objects-cpu\game-objects\Sphere.cpp" />
+    <ClCompile Include="world\objects-cpu\game-objects\Triangle.cpp" />
     <ClCompile Include="world\objects-cpu\light\Light.cpp" />
     <ClCompile Include="world\objects-gpu\SphereGPU.cpp" />
     <ClCompile Include="world\World.cpp" />
@@ -237,6 +238,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="world\objects-cpu\camera\Camera.h" />
     <ClInclude Include="world\objects-cpu\game-objects\GameObjectFactory.h" />
     <ClInclude Include="world\objects-cpu\game-objects\GeometricObject.h" />
+    <ClInclude Include="world\objects-cpu\game-objects\Triangle.h" />
     <ClInclude Include="world\objects-cpu\game-objects\Sphere.h" />
     <ClInclude Include="world\objects-cpu\light\DirectedLight.h" />
     <ClInclude Include="world\objects-cpu\light\Light.h" />

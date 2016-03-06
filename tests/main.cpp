@@ -3,7 +3,15 @@
 
 int main(int argc, char* const argv[])
 {
-	int result = Catch::Session().run();
+	try
+	{
+
+		int result = Catch::Session().run();
+	}
+	catch (...)
+	{
+		std::getchar();
+	}
 	std::getchar();
-	return result;
+	return 0;
 }

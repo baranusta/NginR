@@ -1,11 +1,10 @@
 #include "Sphere.h"
 #include <iostream>
 
-Sphere::Sphere(Vec3<float> p, float r)
+Sphere::Sphere(Vec3<float> p, float r, bool movable) : GeometricObject(movable)
 {
 	center = p;
 	radius = r;
-	id = Count++;
 }
 
 Sphere::Sphere(std::string line)
@@ -20,7 +19,6 @@ Sphere::Sphere(std::string line)
 	float r;
 	eachword >> r;
 	radius = r;
-	id = Count++;
 	toRight = Count % 2 == 0;
 	eachword >> xPos >> yPos >> zPos;
 	ColorSpecular = Color(xPos, yPos, zPos);
@@ -28,6 +26,7 @@ Sphere::Sphere(std::string line)
 	ColorDiffuse = Color(xPos, yPos, zPos);
 	eachword >> xPos >> yPos >> zPos;
 	ColorAmbient = Color(xPos, yPos, zPos);
+	isMovable = true;
 }
 
 void Sphere::getInfo(Vec3<float>&pos, float &r, Color& c, bool& is)

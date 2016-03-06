@@ -3,6 +3,12 @@
 
 int GeometricObject::Count = 0;
 
+GeometricObject::GeometricObject(bool isMovable)
+{
+	this->id = Count++;
+	this->isMovable = isMovable;
+}
+
 GeometricObject::~GeometricObject()
 {
 }
@@ -17,6 +23,10 @@ int GeometricObject::getId() const
 	return id;
 }
 
+bool GeometricObject::getIsMovable() const
+{
+	return isMovable;
+}
 
 Color GeometricObject::getDiffuse() const
 {

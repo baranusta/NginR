@@ -49,6 +49,9 @@
     <ClCompile Include="world\objects-cpu\game-objects\GeometricObject.cpp">
       <Filter>engine\world\objects-cpu\game-objects</Filter>
     </ClCompile>
+    <ClCompile Include="world\objects-cpu\game-objects\Triangle.cpp">
+      <Filter>engine\world\objects-cpu\game-objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="engine">
@@ -172,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="world\objects-cpu\camera\Camera.h">
       <Filter>engine\world\objects-cpu\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="world\objects-cpu\game-objects\Triangle.h">
+      <Filter>engine\world\objects-cpu\game-objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

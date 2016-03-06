@@ -140,7 +140,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="engineTest.cpp" />
+    <ClCompile Include="GameObjectTest.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TriangleTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="catch.hpp" />

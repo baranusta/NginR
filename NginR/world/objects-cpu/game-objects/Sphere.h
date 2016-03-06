@@ -10,7 +10,7 @@
 class Sphere :public GeometricObject
 {
 public:
-	Sphere(Vec3<float> p, float r);
+	Sphere(Vec3<float> p, float r, bool isMovable);
 	Sphere(std::string line);
 	float getMaxX() override;
 	float getMaxY() override;

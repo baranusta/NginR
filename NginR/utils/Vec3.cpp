@@ -42,11 +42,28 @@ Vec3<T> Vec3<T>::operator+(const Vec3 & rhs)
 {
 	return Vec3(x + rhs.x, y + rhs.y, z + rhs.z);
 }
+template <typename T>
+bool Vec3<T>::operator==(const Vec3<T>& rhs) const
+{
+	return x == rhs.getX() && y == rhs.getY() && z == rhs.getZ();
+}
 
 template <typename T>
 T Vec3<T>::dotProduct(const Vec3 & vec)
 {
 	return x*vec.x + y*vec.y + z*vec.z;
+}
+
+
+template <typename T>
+void Vec3<T>::crossProduct(Vec3<T> vec3)
+{
+	float xPos = getY()*vec3.getZ() - getZ()*vec3.getY();
+	float yPos = getZ()*vec3.getX() - getX()*vec3.getZ();
+	float zPos = getX()*vec3.getY() - getY()*vec3.getX();
+	x = xPos;
+	y = yPos;
+	z = zPos;
 }
 
 template <typename T>
@@ -77,19 +94,19 @@ void Vec3<T>::Normalize()
 
 
 template <typename T>
-T Vec3<T>::getX()
+T Vec3<T>::getX() const
 {
 	return x;
 }
 
 template <typename T>
-T Vec3<T>::getY()
+T Vec3<T>::getY() const
 {
 	return y;
 }
 
 template <typename T>
-T Vec3<T>::getZ()
+T Vec3<T>::getZ() const
 {
 	return z;
 }
