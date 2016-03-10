@@ -14,6 +14,8 @@ public:
 	Vec3 operator-(const Vec3 & rhs);
 	Vec3 operator+(const Vec3 & rhs);
 
+	void operator+=(const Vec3 & rhs);
+
 	bool operator==(const Vec3& rhs) const;
 
 	void rotate(Vec3 angle);

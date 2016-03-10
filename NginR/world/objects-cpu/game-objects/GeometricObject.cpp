@@ -40,3 +40,17 @@ Color GeometricObject::getSpecular() const
 {
 	return ColorDiffuse;
 }
+
+void GeometricObject::update()
+{
+	if (isMovable)
+	{
+		rotate(rotationalSpeed);
+		move(speed);
+	}
+}
+
+void GeometricObject::rotate(Vec3<float>& moveVector)
+{
+	angle.rotate(moveVector);
+}

@@ -67,16 +67,9 @@ float Sphere::getMinZ()
 	return center.getZ() - radius;
 }
 
-void Sphere::Move()
+void Sphere::move(Vec3<float>& moveVector)
 {
-	if (center.getY() > 300)
-		toRight = false;
-	if (center.getY() < -300)
-		toRight = true;
-	int t = 2;
-	if (!toRight)
-		t *= -1;
-	center = Vec3<float>(center.getX(), center.getY() + t, center.getZ());
+	center += moveVector;
 }
 
 bool Sphere::isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float>& Normal, Vec3<float> & Point, float &dist)
@@ -103,27 +96,8 @@ bool Sphere::isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float>& 
 		return false;
 }
 
-bool Sphere::isIntersects(Vec3<float> p)
+const Vec3<float>& Sphere::getNormal(const Vec3<float>& intersectionPoint) const
 {
-	if (getMaxX() > p.getX() && getMinX() < p.getX())
-		return true;
-	if (getMaxY() > p.getY() && getMinY() < p.getY())
-		return true;
-	if (getMaxZ() > p.getZ() && getMinZ() < p.getZ())
-		return true;
-	return false;
-}
-
-int Sphere::nextPos(Vec3<float> p)
-{
-	float pos = 0;
-	if (center.getX() > p.getX())
-		pos += 4;
-	if (center.getY() > p.getY())
-		pos += 2;
-	if (center.getZ() > p.getZ())
-		pos += 1;
-	return pos;
 }
 
 bool Sphere::_checkDimension(float target, float src, float dim2Max, float dim2Min)

@@ -1,9 +1,29 @@
 #include <iostream>
 #include <Engine.h>
+#include <world/objects-cpu/game-objects/Triangle.h>
+#include <world/objects-cpu/game-objects/Sphere.h>
 TextViewGL* mode;
 
 
 #define KEYBOARD_LISTENER_FOR_RENDER "processorBidisi"
+
+class myObject : public Sphere
+{
+public:
+	void update() override
+	{
+
+		if (center.getY() > 300)
+		toRight = false;
+		if (center.getY() < -300)
+			toRight = true;
+		int t = 2;
+		if (!toRight)
+		t *= -1;
+		center = Vec3<float>(center.getX(), center.getY() + t, center.getZ());
+	}
+};
+
 
 class DemoGame : public Engine::Game
 {
@@ -27,7 +47,7 @@ public:
 		};
 
 		addKeyboardListener(KEYBOARD_LISTENER_FOR_RENDER, listener);
-
+		myObject m();
 		World* world = new World(Color(0.3f, 0.3f, 0.3f));
 
 		world->createWithFile("World.txt");
@@ -35,7 +55,7 @@ public:
 			Color(0.1f, 0.1f, 0.1f),
 			Color(0.8f, 0.8f, 0.8f),
 			Color(1.f, 1.f, 1.f));
-
+		//world->addObject(new Triangle(Vec3<float>(3, 0, 0), Vec3<float>(0, -3, 0), Vec3<float>(0, 3, 0)));
 		setWorld(world);
 		listener('1', 0, 0);
 	}

@@ -33,7 +33,11 @@ Triangle::Triangle(std::string line)
 }
 
 Triangle::Triangle(const Triangle& copied)
-{
+{ 
+	for (auto value: copied.corners)
+		corners[0] = value;
+	
+	normal = copied.normal;
 }
 
 float Triangle::getMax(float arr[]) const
@@ -95,8 +99,26 @@ float Triangle::getMinZ()
 	return getMin(values);
 }
 
-void Triangle::Move()
+void Triangle::rotate(Vec3<float>& moveVector)
 {
+	Vec3<float> total = corners[0];
+	total += corners[1];
+	total += corners[2];
+	
+	Vec3<float> center(total.getX() / 3, total.getY() / 3, total.getZ() / 3);
+	for (int i = 0; i < 3;i++)
+	{
+		Vec3<float> centerToPoint = corners[i] - center;
+		centerToPoint.rotate(moveVector);
+		corners[i] = centerToPoint + center;
+	}
+}
+
+void Triangle::move(Vec3<float>& moveVector)
+{
+	corners[0] += moveVector;
+	corners[1] += moveVector;
+	corners[2] += moveVector;
 }
 
 bool Triangle::isRayIntersects(Vec3<float>& ray, Vec3<float>& src, Vec3<float>&, Vec3<float>& Point, float& dist)
@@ -104,17 +126,7 @@ bool Triangle::isRayIntersects(Vec3<float>& ray, Vec3<float>& src, Vec3<float>&,
 	return 1;
 }
 
-bool Triangle::isIntersects(Vec3<float> p)
-{
-	return 1;
-}
-
-int Triangle::nextPos(Vec3<float> p)
-{
-	return 1;
-}
-
-const Vec3<float>& Triangle::getNormal() const
+const Vec3<float>& Triangle::getNormal(const Vec3<float>& intersectionPoint) const
 {
 	return normal;
 }

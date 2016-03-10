@@ -19,13 +19,15 @@ public:
 	float getMinY() override;
 	float getMinZ() override;
 	bool shouldExist();
-	void Move();
-	void getInfo(Vec3<float>&, float &r, Color& c, bool&);
-	bool isRayIntersects(Vec3<float> & ray , Vec3<float> & src, Vec3<float>&, Vec3<float> & Point, float& dist);
-	bool isIntersects(Vec3<float> p);
-	int nextPos(Vec3<float> p);
+	
+	virtual void move(Vec3<float>& moveVector) override;
 
-private:
+	void getInfo(Vec3<float>&, float &r, Color& c, bool&);
+	bool isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float>&, Vec3<float> & Point, float& dist) override;
+	const Vec3<float> & getNormal(const Vec3<float>& intersectionPoint) const override;
+
+
+protected:
 
 	bool _checkDimension(float target, float src, float dim2Max, float dim2Min);
 	bool _isPossibleToIntersect(Vec3<float>& ray, Vec3<float>& src);

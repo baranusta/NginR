@@ -54,7 +54,6 @@ bool World::createWithFile(std::string fileName)
 		file >> line;
 		//To pass explanation line in file
 		std::getline(file, line);
-		std::getline(file, line);
 
 		GameObjectFactory factory;
 		while (std::getline(file, line))
@@ -137,13 +136,13 @@ void World::_updateObjectsOpenMP()
 {
 	#pragma omp parallel for schedule(static)
 	for (int i = 0; i< Objects.size(); i++)
-		Objects[i]->Move();
+		Objects[i]->update();
 }
 
 void World::_updateObjectsSequential()
 {
 	for (GeometricObject* object : Objects)
-		object->Move();
+		object->update();
 }
 
 void World::_updateObjectsCUDA()

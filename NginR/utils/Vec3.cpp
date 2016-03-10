@@ -42,6 +42,15 @@ Vec3<T> Vec3<T>::operator+(const Vec3 & rhs)
 {
 	return Vec3(x + rhs.x, y + rhs.y, z + rhs.z);
 }
+
+template <typename T>
+void Vec3<T>::operator+=(const Vec3<T>& rhs)
+{
+	x = x + rhs.x;
+	y = y + rhs.y;
+	z = z + rhs.z;
+}
+
 template <typename T>
 bool Vec3<T>::operator==(const Vec3<T>& rhs) const
 {

@@ -21,13 +21,13 @@ public:
 	float getMinY() override;
 	float getMinZ() override;
 
-	void Move() override;
+
+	virtual void rotate(Vec3<float>& moveVector) override;
+	virtual void move(Vec3<float>& moveVector) override;
 
 	bool isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float>&, Vec3<float> & Point, float& dist) override;
-	bool isIntersects(Vec3<float> p) override;
-	int nextPos(Vec3<float> p) override;
-
-	const Vec3<float> & getNormal() const;
+	
+	const Vec3<float> & getNormal(const Vec3<float>& intersectionPoint) const override;
 
 private:
 	float getMax(float arr[]) const;
