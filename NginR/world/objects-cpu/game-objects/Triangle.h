@@ -1,13 +1,13 @@
-#ifndef _QUADRILATERALS_H_
-#define _QUADRILATERALS_H_
+#ifndef _TRIANGLE_H_
+#define _TRIANGLE_H_
 
 #include "../../../utils/Utils.h"
 #include <string>
 #include <sstream>
-#include "GeometricObject.h"
+#include "GameObject.h"
 
 
-class Triangle :public GeometricObject
+class Triangle :public GameObject
 {
 public:
 	Triangle(Vec3<float> top, Vec3<float> right, Vec3<float> left);
@@ -21,15 +21,11 @@ public:
 	float getMinY() override;
 	float getMinZ() override;
 
-
-	virtual void rotate(Vec3<float>& moveVector) override;
-	virtual void move(Vec3<float>& moveVector) override;
-
-	bool isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float>&, Vec3<float> & Point, float& dist) override;
+	bool isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float> & Point, float& dist) override;
 	
 	const Vec3<float> & getNormal(const Vec3<float>& intersectionPoint) const override;
 
-private:
+protected:
 	float getMax(float arr[]) const;
 	float getMin(float arr[]) const;
 

@@ -1,7 +1,7 @@
 #include "Sphere.h"
 #include <iostream>
 
-Sphere::Sphere(Vec3<float> p, float r, bool movable) : GeometricObject(movable)
+Sphere::Sphere(Vec3<float> p, float r)
 {
 	center = p;
 	radius = r;
@@ -26,7 +26,6 @@ Sphere::Sphere(std::string line)
 	ColorDiffuse = Color(xPos, yPos, zPos);
 	eachword >> xPos >> yPos >> zPos;
 	ColorAmbient = Color(xPos, yPos, zPos);
-	isMovable = true;
 }
 
 void Sphere::getInfo(Vec3<float>&pos, float &r, Color& c, bool& is)
@@ -67,12 +66,7 @@ float Sphere::getMinZ()
 	return center.getZ() - radius;
 }
 
-void Sphere::move(Vec3<float>& moveVector)
-{
-	center += moveVector;
-}
-
-bool Sphere::isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float>& Normal, Vec3<float> & Point, float &dist)
+bool Sphere::isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float> & Point, float &dist)
 {
 	float a = 1;
 	float b = 2 * (ray.getX() *(src.getX() - center.getX()) + ray.getY() *(src.getY() - center.getY()) + ray.getZ() *(src.getZ() - center.getZ()));
@@ -89,7 +83,6 @@ bool Sphere::isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float>& 
 		dist = sqrt(a) * t;
 		Vec3<float> hitd(ray.getX()*t, ray.getY()*t, ray.getZ()*t);
 		Point = src + hitd;
-		Normal = Point - center;
 		return true;
 	}
 	else
@@ -98,6 +91,10 @@ bool Sphere::isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float>& 
 
 const Vec3<float>& Sphere::getNormal(const Vec3<float>& intersectionPoint) const
 {
+	Vec3<float> vect = intersectionPoint;
+	vect = vect - center;
+	vect.Normalize();
+	return vect;
 }
 
 bool Sphere::_checkDimension(float target, float src, float dim2Max, float dim2Min)

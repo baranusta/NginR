@@ -13,23 +13,21 @@ public:
 	T getZ() const;
 	Vec3 operator-(const Vec3 & rhs);
 	Vec3 operator+(const Vec3 & rhs);
+	Vec3 operator*(T value);
 
 	void operator+=(const Vec3 & rhs);
-
 	bool operator==(const Vec3& rhs) const;
 
+	T distance(const Vec3<T>& vec3);
 	void rotate(Vec3 angle);
 	T dotProduct(const Vec3 & vec);
-	void crossProduct(Vec3<T> vec3);
+	Vec3<T> crossProduct(Vec3<T> vec3);
 
-private:
+protected:
 	T x;
 	T y;
 	T z;
 };
-
-template<typename T>
-using Angle = Vec3<T>;
 
 #include "Vec3.cpp"
 

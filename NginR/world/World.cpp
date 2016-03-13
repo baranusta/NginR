@@ -26,15 +26,21 @@ void World::addWorld(World w)
 {
 	for (Light light : w.lights)
 		this->addLight(light);
-	for (GeometricObject* object : w.Objects)
+	for (GameObject* object : w.Objects)
+	{
 		this->addObject(object);
+	}
 	if (isCUDAenabled && updateType != GPUCUDA)
 		initGPUMemoryForObjects();
 }
 
-void World::addObject(GeometricObject* p)
+void World::addObject(GameObject* p)
 {
 	Objects.push_back(p);
+	if (Moveable* moveable = dynamic_cast< Moveable* >(p))
+	{
+		moveable_objects.push_back(moveable);
+	}
 }
 
 Color World::getAmbient() const
@@ -58,7 +64,7 @@ bool World::createWithFile(std::string fileName)
 		GameObjectFactory factory;
 		while (std::getline(file, line))
 		{
-			GeometricObject* object = factory.getGameObjectFromLine(line);
+			GameObject* object = factory.getGameObjectFromLine(line);
 			if (object!=nullptr)
 				addObject(object);
 		}
@@ -136,12 +142,12 @@ void World::_updateObjectsOpenMP()
 {
 	#pragma omp parallel for schedule(static)
 	for (int i = 0; i< Objects.size(); i++)
-		Objects[i]->update();
+		moveable_objects[i]->update();
 }
 
 void World::_updateObjectsSequential()
 {
-	for (GeometricObject* object : Objects)
+	for (Moveable* object : moveable_objects)
 		object->update();
 }
 

@@ -6,13 +6,13 @@
 class RectWorld;
 
 
-class GeometricObject
+class GameObject
 {
 public:
 	static int Count;
 
-	GeometricObject(bool isMovable = true);
-	~GeometricObject();
+	GameObject();
+	~GameObject();
 	virtual float getMaxX() = 0;
 	virtual float getMaxY() = 0;
 	virtual float getMaxZ() = 0;
@@ -25,19 +25,19 @@ public:
 	Color getDiffuse() const;
 	Color getAmbient() const;
 	Color getSpecular() const;
+
+	void setDiffuse(Color);
+	void setAmbient(Color);
+	void setSpecular(Color);
 	
 
-	virtual void update();
-	virtual void rotate(Vec3<float>& moveVector);
-	virtual void move(Vec3<float>& moveVector) = 0;
 
-	virtual bool isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float>&, Vec3<float> & Point, float& dist) = 0;
+	virtual bool isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float> & Point, float& dist) = 0;
 	//virtual int nextPos(Vec3<float> p) = 0;
 
 	//Getters
 	virtual const Vec3<float>& getNormal(const Vec3<float>& intersectionPoint) const = 0;
 	int getId() const;
-	bool getIsMovable() const;
 
 protected:
 	int id;
@@ -45,10 +45,7 @@ protected:
 	Color ColorSpecular;
 	Color ColorDiffuse;
 	bool toRight;
-	bool isMovable;
 
-	Vec3<float> speed;
-	Vec3<float> rotationalSpeed;
 
 	Vec3<float> angle;
 

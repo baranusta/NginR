@@ -1,4 +1,5 @@
 #include "Triangle.h"
+#define EPSILON 0.001
 
 
 void Triangle::copyTriangle(Vec3<float> top, Vec3<float> right, Vec3<float> left)
@@ -99,31 +100,31 @@ float Triangle::getMinZ()
 	return getMin(values);
 }
 
-void Triangle::rotate(Vec3<float>& moveVector)
+//Möller–Trumbore intersection algorithm
+bool Triangle::isRayIntersects(Vec3<float>& ray, Vec3<float>& src, Vec3<float>& Point, float& dist)
 {
-	Vec3<float> total = corners[0];
-	total += corners[1];
-	total += corners[2];
-	
-	Vec3<float> center(total.getX() / 3, total.getY() / 3, total.getZ() / 3);
-	for (int i = 0; i < 3;i++)
-	{
-		Vec3<float> centerToPoint = corners[i] - center;
-		centerToPoint.rotate(moveVector);
-		corners[i] = centerToPoint + center;
-	}
-}
+	Vec3<float> edge2from0 = corners[2] - corners[0];
+	Vec3<float> edge1from0 = corners[1] - corners[0];
+	Vec3<float> cross = ray.crossProduct(edge2from0);
 
-void Triangle::move(Vec3<float>& moveVector)
-{
-	corners[0] += moveVector;
-	corners[1] += moveVector;
-	corners[2] += moveVector;
-}
+	float det = cross.dotProduct(edge1from0);
+	if (det<EPSILON && det>-EPSILON) return false;
 
-bool Triangle::isRayIntersects(Vec3<float>& ray, Vec3<float>& src, Vec3<float>&, Vec3<float>& Point, float& dist)
-{
-	return 1;
+	float inv_det = 1.f / det;
+
+	Vec3<float> distance = src - corners[0];
+	float u = distance.dotProduct(cross) * inv_det;
+
+	if (u < 0.f || u > 1.f) return false;
+
+	Vec3<float> qvec = distance.crossProduct(edge1from0);
+	float v = qvec.dotProduct(ray) * inv_det;
+
+	if (v < 0.f || u + v  > 1.f) return false;
+
+	float t = distance.dotProduct(edge2from0) * inv_det;
+	Point = (distance * t) + src;
+	return true;
 }
 
 const Vec3<float>& Triangle::getNormal(const Vec3<float>& intersectionPoint) const

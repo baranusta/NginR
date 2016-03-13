@@ -4,13 +4,13 @@
 #include "../../../utils/Utils.h"
 #include <string>
 #include <sstream>
-#include "GeometricObject.h"
+#include "GameObject.h"
 
 
-class Sphere :public GeometricObject
+class Sphere :public GameObject
 {
 public:
-	Sphere(Vec3<float> p, float r, bool isMovable);
+	Sphere(Vec3<float> p, float r);
 	Sphere(std::string line);
 	float getMaxX() override;
 	float getMaxY() override;
@@ -20,10 +20,9 @@ public:
 	float getMinZ() override;
 	bool shouldExist();
 	
-	virtual void move(Vec3<float>& moveVector) override;
 
 	void getInfo(Vec3<float>&, float &r, Color& c, bool&);
-	bool isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float>&, Vec3<float> & Point, float& dist) override;
+	bool isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float> & Point, float& dist) override;
 	const Vec3<float> & getNormal(const Vec3<float>& intersectionPoint) const override;
 
 

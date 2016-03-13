@@ -46,11 +46,23 @@
     <ClCompile Include="world\objects-cpu\game-objects\Sphere.cpp">
       <Filter>engine\world\objects-cpu\game-objects</Filter>
     </ClCompile>
-    <ClCompile Include="world\objects-cpu\game-objects\GeometricObject.cpp">
-      <Filter>engine\world\objects-cpu\game-objects</Filter>
-    </ClCompile>
     <ClCompile Include="world\objects-cpu\game-objects\Triangle.cpp">
       <Filter>engine\world\objects-cpu\game-objects</Filter>
+    </ClCompile>
+    <ClCompile Include="world\objects-cpu\moving-objects\Moveable.cpp">
+      <Filter>engine\world\objects-cpu\moving_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="world\objects-cpu\moving-objects\MoveableTriangle.cpp">
+      <Filter>engine\world\objects-cpu\moving_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="world\objects-cpu\game-objects\GameObject.cpp">
+      <Filter>engine\world\objects-cpu\game-objects</Filter>
+    </ClCompile>
+    <ClCompile Include="world\objects-cpu\moving-objects\MoveableSphere.cpp">
+      <Filter>engine\world\objects-cpu\moving_objects</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\Angle.h">
+      <Filter>engine\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +104,9 @@
     </Filter>
     <Filter Include="engine\graphic-library-wrappers\opengl-wrapper">
       <UniqueIdentifier>{596cf188-db52-4e7d-bfa8-d8069a66001c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\world\objects-cpu\moving_objects">
+      <UniqueIdentifier>{5d727f76-39a0-4f28-ab2a-a449283b56b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -164,9 +179,6 @@
     <ClInclude Include="world\objects-cpu\light\DirectedLight.h">
       <Filter>engine\world\objects-cpu\light</Filter>
     </ClInclude>
-    <ClInclude Include="world\objects-cpu\game-objects\GeometricObject.h">
-      <Filter>engine\world\objects-cpu\game-objects</Filter>
-    </ClInclude>
     <ClInclude Include="world\objects-cpu\game-objects\Sphere.h">
       <Filter>engine\world\objects-cpu\game-objects</Filter>
     </ClInclude>
@@ -178,6 +190,18 @@
     </ClInclude>
     <ClInclude Include="world\objects-cpu\game-objects\Triangle.h">
       <Filter>engine\world\objects-cpu\game-objects</Filter>
+    </ClInclude>
+    <ClInclude Include="world\objects-cpu\moving-objects\Moveable.h">
+      <Filter>engine\world\objects-cpu\moving_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="world\objects-cpu\moving-objects\MoveableTriangle.h">
+      <Filter>engine\world\objects-cpu\moving_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="world\objects-cpu\game-objects\GameObject.h">
+      <Filter>engine\world\objects-cpu\game-objects</Filter>
+    </ClInclude>
+    <ClInclude Include="world\objects-cpu\moving-objects\MoveableSphere.h">
+      <Filter>engine\world\objects-cpu\moving_objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

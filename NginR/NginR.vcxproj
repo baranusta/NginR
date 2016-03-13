@@ -204,14 +204,18 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClCompile Include="renderers\raytracers\RayTracingStrategyCPU.cpp" />
     <ClCompile Include="renderers\raytracers\RayTracingStrategyCUDA.cpp" />
     <ClCompile Include="renderers\RenderController.cpp" />
+    <ClCompile Include="utils\Angle.h" />
     <ClCompile Include="utils\Color.cpp" />
     <ClCompile Include="utils\FileReading.cpp" />
     <ClCompile Include="utils\Vec3.cpp" />
     <ClCompile Include="viewutils\TextViewGL.cpp" />
-    <ClCompile Include="world\objects-cpu\game-objects\GeometricObject.cpp" />
+    <ClCompile Include="world\objects-cpu\game-objects\GameObject.cpp" />
     <ClCompile Include="world\objects-cpu\game-objects\Sphere.cpp" />
     <ClCompile Include="world\objects-cpu\game-objects\Triangle.cpp" />
     <ClCompile Include="world\objects-cpu\light\Light.cpp" />
+    <ClCompile Include="world\objects-cpu\moving-objects\Moveable.cpp" />
+    <ClCompile Include="world\objects-cpu\moving-objects\MoveableSphere.cpp" />
+    <ClCompile Include="world\objects-cpu\moving-objects\MoveableTriangle.cpp" />
     <ClCompile Include="world\objects-gpu\SphereGPU.cpp" />
     <ClCompile Include="world\World.cpp" />
   </ItemGroup>
@@ -237,11 +241,14 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="viewutils\TextViewGL.h" />
     <ClInclude Include="world\objects-cpu\camera\Camera.h" />
     <ClInclude Include="world\objects-cpu\game-objects\GameObjectFactory.h" />
-    <ClInclude Include="world\objects-cpu\game-objects\GeometricObject.h" />
+    <ClInclude Include="world\objects-cpu\game-objects\GameObject.h" />
     <ClInclude Include="world\objects-cpu\game-objects\Triangle.h" />
     <ClInclude Include="world\objects-cpu\game-objects\Sphere.h" />
     <ClInclude Include="world\objects-cpu\light\DirectedLight.h" />
     <ClInclude Include="world\objects-cpu\light\Light.h" />
+    <ClInclude Include="world\objects-cpu\moving-objects\Moveable.h" />
+    <ClInclude Include="world\objects-cpu\moving-objects\MoveableSphere.h" />
+    <ClInclude Include="world\objects-cpu\moving-objects\MoveableTriangle.h" />
     <ClInclude Include="world\objects-gpu\SphereGPU.h" />
     <ClInclude Include="world\World.h" />
   </ItemGroup>

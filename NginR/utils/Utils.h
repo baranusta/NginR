@@ -1,4 +1,5 @@
 #include "Vec3.h"
+#include "Angle.h"
 #include "Color.h"
 #include "CommonEnums.h"
 #include "Exception.h"

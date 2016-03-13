@@ -13,7 +13,7 @@ public:
 
 	void IterateInnerLoop(const World& w, Vec3<int> ViewPort, int i, int k, unsigned int* dst);
 private:
-	int DetermineColor(Light& light, Vec3<float>& ray, Vec3<float>& Normal, Vec3<float>& hitPoint, int objId, std::vector<GeometricObject*>* Objects) const;
+	int DetermineColor(Light& light, Vec3<float>& ray, Vec3<float>& Normal, Vec3<float>& hitPoint, int objId, std::vector<GameObject*>* Objects) const;
 };
 
 #endif

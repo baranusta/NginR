@@ -6,8 +6,9 @@
 #include <fstream>
 
 #include "../graphic-library-wrappers/GraphicLibraryWrapper.h"
-#include "objects-cpu/game-objects/GeometricObject.h"
+#include "objects-cpu/game-objects/GameObject.h"
 #include "objects-cpu/light/Light.h"
+#include "objects-cpu/moving-objects/Moveable.h"
 
 
 enum RenderOptionNames;
@@ -26,7 +27,7 @@ public:
 	World(Color);
 	~World();
 	void addWorld(World);
-	void addObject(GeometricObject*);
+	void addObject(GameObject*);
 	void addLight(Vec3<float> pos, Color Ambient, Color Diffuse, Color Specular);
 	void addLight(Light light);
 
@@ -51,7 +52,7 @@ public:
 
 	//This will be removed
 	//when the raytracing strategies implemented
-	std::vector<GeometricObject*> GetObjects() const
+	std::vector<GameObject*> GetObjects() const
 	{
 		return Objects;
 	}
@@ -72,7 +73,8 @@ private:
 
 	//Later This Will hold Light Objects
 	std::vector<Light> lights;
-	std::vector<GeometricObject*> Objects;
+	std::vector<GameObject*> Objects;
+	std::vector<Moveable*> moveable_objects;
 
 	//CUDA Object
 	float* cudaObjects;

@@ -4,7 +4,7 @@ float eyePosx = -25000;
 
 Vec3<int> ViewPort(eyePosx + 23000, 768, 512);
 Vec3<float> eyePos(eyePosx, 0, 0);
-Angle<float> ViewPortAngle(0, 0, 0);
+Angle ViewPortAngle(0, 0, 0, Angle::DEGREE);
 
 
 Engine::Game::Game(bool isCudaRequested) : isCudaRequested(isCudaRequested)
@@ -31,7 +31,7 @@ void Engine::Game::addWorld(const World & w)
 	this->world->addWorld(w);
 }
 
-void Engine::Game::addObject(GeometricObject& object)
+void Engine::Game::addObject(GameObject& object)
 {
 	world->addObject(&object);
 }
