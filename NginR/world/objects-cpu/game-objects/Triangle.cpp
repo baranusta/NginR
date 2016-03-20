@@ -14,9 +14,9 @@ Vec3<float>& Triangle::calculateNormal()
 {
 	Vec3<float> vec1 = corners[2] - corners[0];
 	Vec3<float> vec2 = corners[1] - corners[0];
-	vec2.crossProduct(vec1);
-	vec2.Normalize();
-	return vec2;
+	Vec3<float> crossP = vec1.crossProduct(vec2);
+	crossP.Normalize();
+	return crossP;
 }
 
 Triangle::Triangle(Vec3<float> top,Vec3<float> right,Vec3<float> left)
@@ -123,7 +123,7 @@ bool Triangle::isRayIntersects(Vec3<float>& ray, Vec3<float>& src, Vec3<float>& 
 	if (v < 0.f || u + v  > 1.f) return false;
 
 	float t = distance.dotProduct(edge2from0) * inv_det;
-	Point = (distance * t) + src;
+	Point = corners[0] + edge2from0 * v + edge1from0 * u;
 	return true;
 }
 

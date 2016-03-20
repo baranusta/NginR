@@ -21,6 +21,7 @@ void MoveableTriangle::rotate(Angle& moveVector)
 		centerToPoint.rotate(moveVector);
 		corners[i] = centerToPoint + center;
 	}
+	normal.rotate(moveVector);
 }
 
 void MoveableTriangle::move(Vec3<float>& moveVector)

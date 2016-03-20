@@ -51,11 +51,15 @@ private:
 	{
 		MoveableTriangle* object = new MoveableTriangle(Vec3<float>(0, 50, 0),
 			Vec3<float>(0, -50, 0),
-			Vec3<float>(0, 0, 50));
+			Vec3<float>(30, 0, 50));
+
+		object->setDiffuse(Color(1, 0.4, 0.7));
+		object->setAmbient(Color(18, 80, 26));
+		object->setSpecular(Color(82, 23, 32));
 
 		object->setUpdateFunction([object]()
 		{
-			Angle wow(2, 0, 0, Angle::DEGREE);
+			Angle wow(0, 2, 0, Angle::DEGREE);
 			object->rotate(wow);
 		});
 
@@ -67,7 +71,6 @@ private:
 				object->setSpeed(Vec3<float>(0, -2, 0));
 			else if (key == 'd')
 				object->setSpeed(Vec3<float>(0, 2, 0));
-
 		};
 
 		addKeyboardListener(KEYBOARD_LISTENER_FOR_TRIANGLE, listener);

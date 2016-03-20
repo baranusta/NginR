@@ -2,7 +2,6 @@
 
 #include <algorithm>
 
-int wow = 0;
 void RayTracingStrategyCPU::IterateInnerLoop(const World & w, Vec3<int> ViewPort, int i, int k, unsigned int* dst)
 {
 	for (int j = -ViewPort.getZ() / 2, t = 0; j < ViewPort.getZ() / 2; j++, t++)
@@ -25,29 +24,21 @@ void RayTracingStrategyCPU::IterateInnerLoop(const World & w, Vec3<int> ViewPort
 				
 				if (dist < minDist)
 				{
-					if (objectId == 1 && t == 450)
-						printf("a normalX:%f normalX:%f normalZ:%f\n", Normal.getX(), Normal.getY(), Normal.getZ());
-
 					minDist = dist;
 					Vec3<float> normal = Objects[id]->getNormal(hP);
-					if (objectId == 1 && t == 450)
-						printf("b normalX:%f normalX:%f normalZ:%f\n", normal.getX(), normal.getY(), normal.getZ());
-
 					Normal = normal;
 					hitPoint = hP;
 					objectId = id; 
-					if (objectId == 1 && t == 450)
-						printf("c normalX:%f normalX:%f normalZ:%f\n", Normal.getX(), Normal.getY(), Normal.getZ());
-
 				}
 			}
 		}
-		if (objectId == 1 && t == 450)
-			printf("normalX:%f normalX:%f normalZ:%f %d\n", Normal.getX(), Normal.getY(), Normal.getZ(), wow++);
 
 
 		if (minDist != 1000000)
-			dst[t * (int)ViewPort.getY() + k] = DetermineColor(w.getLight(), ray, Normal, hitPoint, objectId, &Objects);
+		{
+			float wow = DetermineColor(w.getLight(), ray, Normal, hitPoint, objectId, &Objects);
+			dst[t * (int)ViewPort.getY() + k] = wow;
+		}
 		else
 		{
 			float ws = w.getAmbient().rgbToInt();
@@ -66,15 +57,22 @@ int RayTracingStrategyCPU::DetermineColor(Light& light, Vec3<float>& ray, Vec3<f
 	SourceToLight.Normalize();
 	bool willBeShaded = false;
 
-	for (int id = 0; id < Objects->size(); id++)
+	if ((ray.dotProduct(Normal)<0 && Normal.dotProduct(SourceToLight)>=0) || (ray.dotProduct(Normal)>=0 && Normal.dotProduct(SourceToLight)<=0))
 	{
-		Vec3<float> N, hP;
-		float dist;
-		if (id != objId && (*Objects)[id]->isRayIntersects(SourceToLight, hitPoint, hP, dist))
+		for (int id = 0; id < Objects->size(); id++)
 		{
-			willBeShaded = true;
-			break;
+			Vec3<float> N, hP;
+			float dist;
+			if (id != objId && (*Objects)[id]->isRayIntersects(SourceToLight, hitPoint, hP, dist))
+			{
+				willBeShaded = true;
+				break;
+			}
 		}
+	}
+	else
+	{
+		willBeShaded = true;
 	}
 
 	GameObject* obj = (*Objects)[objId];
@@ -87,10 +85,10 @@ int RayTracingStrategyCPU::DetermineColor(Light& light, Vec3<float>& ray, Vec3<f
 	else{
 		float kd = diffuseConst;
 		Vec3<float> h = SourceToLight - ray;
-		Normal.Normalize();
 		h.Normalize();
 		//Diffuse Illumination
-		float lDotNormal = std::max(0.f, SourceToLight.dotProduct(Normal));
+		float lDotNormal = SourceToLight.dotProduct(Normal);
+		lDotNormal = lDotNormal <=  0 ? SourceToLight.dotProduct(Normal * -1) : lDotNormal;
 		baseColor = baseColor + (obj->getDiffuse() * lDotNormal * kd * light.getDiffuse());
 		//Specular Lightning
 		float phong = pow(std::max(0.f, h.dotProduct(Normal)), phongPower);
