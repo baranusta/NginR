@@ -2,6 +2,7 @@
 
 #include <algorithm>
 
+int wow = 0;
 void RayTracingStrategyCPU::IterateInnerLoop(const World & w, Vec3<int> ViewPort, int i, int k, unsigned int* dst)
 {
 	for (int j = -ViewPort.getZ() / 2, t = 0; j < ViewPort.getZ() / 2; j++, t++)
@@ -13,23 +14,37 @@ void RayTracingStrategyCPU::IterateInnerLoop(const World & w, Vec3<int> ViewPort
 		ray.Normalize();*/
 		float minDist = 1000000;
 		Vec3<float> Normal, hitPoint;
-		int objectId;
+		int objectId = -1;
 		std::vector<GameObject*> Objects = w.GetObjects();
-		for (int id = 0,size = Objects.size(); id < size; id++)
+		for (int id = 0, size = Objects.size(); id < size; id++)
 		{
 			float dist;
 			Vec3<float> N, hP;
 			if (Objects[id]->isRayIntersects(ray, src, hP, dist))
 			{
+				
 				if (dist < minDist)
 				{
+					if (objectId == 1 && t == 450)
+						printf("a normalX:%f normalX:%f normalZ:%f\n", Normal.getX(), Normal.getY(), Normal.getZ());
+
 					minDist = dist;
-					Normal = Objects[id]->getNormal(hP);
+					Vec3<float> normal = Objects[id]->getNormal(hP);
+					if (objectId == 1 && t == 450)
+						printf("b normalX:%f normalX:%f normalZ:%f\n", normal.getX(), normal.getY(), normal.getZ());
+
+					Normal = normal;
 					hitPoint = hP;
-					objectId = id;
+					objectId = id; 
+					if (objectId == 1 && t == 450)
+						printf("c normalX:%f normalX:%f normalZ:%f\n", Normal.getX(), Normal.getY(), Normal.getZ());
+
 				}
 			}
 		}
+		if (objectId == 1 && t == 450)
+			printf("normalX:%f normalX:%f normalZ:%f %d\n", Normal.getX(), Normal.getY(), Normal.getZ(), wow++);
+
 
 		if (minDist != 1000000)
 			dst[t * (int)ViewPort.getY() + k] = DetermineColor(w.getLight(), ray, Normal, hitPoint, objectId, &Objects);

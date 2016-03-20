@@ -23,7 +23,7 @@ public:
 
 	bool isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float> & Point, float& dist) override;
 	
-	const Vec3<float> & getNormal(const Vec3<float>& intersectionPoint) const override;
+	Vec3<float>getNormal(const Vec3<float>& intersectionPoint) const override;
 
 protected:
 	float getMax(float arr[]) const;

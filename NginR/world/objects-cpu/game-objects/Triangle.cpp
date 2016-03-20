@@ -127,7 +127,7 @@ bool Triangle::isRayIntersects(Vec3<float>& ray, Vec3<float>& src, Vec3<float>& 
 	return true;
 }
 
-const Vec3<float>& Triangle::getNormal(const Vec3<float>& intersectionPoint) const
+ Vec3<float> Triangle::getNormal(const Vec3<float>& intersectionPoint) const
 {
 	return normal;
 }

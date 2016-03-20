@@ -89,7 +89,7 @@ bool Sphere::isRayIntersects(Vec3<float> & ray, Vec3<float> & src, Vec3<float> &
 		return false;
 }
 
-const Vec3<float>& Sphere::getNormal(const Vec3<float>& intersectionPoint) const
+Vec3<float> Sphere::getNormal(const Vec3<float>& intersectionPoint) const
 {
 	Vec3<float> vect = intersectionPoint;
 	vect = vect - center;

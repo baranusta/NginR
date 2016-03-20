@@ -36,7 +36,7 @@ public:
 	//virtual int nextPos(Vec3<float> p) = 0;
 
 	//Getters
-	virtual const Vec3<float>& getNormal(const Vec3<float>& intersectionPoint) const = 0;
+	virtual Vec3<float> getNormal(const Vec3<float>& intersectionPoint) const = 0;
 	int getId() const;
 
 protected:
