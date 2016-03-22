@@ -8,6 +8,10 @@ Moveable::Moveable()
 	updateFunction = [](void) -> void{};
 }
 
+Moveable::~Moveable()
+{
+}
+
 void Moveable::update()
 {
 	rotate(rotationalSpeed); 

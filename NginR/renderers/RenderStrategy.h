@@ -6,7 +6,7 @@
 
 class RenderStrategy{
 public:
-	RenderStrategy(float d, float p,ProcessorType type)
+	RenderStrategy(float d, float p, ProcessorType type)
 		:diffuseConst(d), phongPower(p), pType(type)
 	{
 	}
@@ -16,8 +16,16 @@ public:
 		delete name;
 	}
 
-	virtual void DrawNextFrame(World& w, Vec3<int> ViewPort, unsigned int* dst) = 0;
-	
+	virtual void DrawNextFrame(const Light & light, 
+		const std::vector<GameObject*>& objects,
+		unsigned int* src,
+		unsigned int* dst,
+		const Vec3<float>& camPos,
+		int distance,
+		int width,
+		int height) = 0;
+	//virtual void setUpStaticScene(std::vector<GameObject*> staticObjectsArr);
+
 	char* GetName() const
 	{
 		return name;

@@ -6,6 +6,7 @@
 #include "world/World.h"
 #include "renderers/RenderController.h"
 #include "graphic-library-wrappers/GraphicLibraryWrapper.h"
+#include "world/objects-cpu/camera/Camera.h"
 
 
 #include "renderers/raytracers/RayTracingStrategySequential.h"
@@ -21,14 +22,15 @@ namespace Engine
 	class Game
 	{
 	public:
+
 		Game(bool isCudaRequested = false);
 		~Game();
 		bool getCudaRequest() const;
 
 		void setWorld(World* w);
+		void setCamera(Camera* cam);
 		void addWorld(const World & w);
 		void addObject(GameObject & object);
-		void addRenderingStrategy(RenderOptionNames rType, RenderStrategy* strategy);
 		void processNextFrame(unsigned int* dst = nullptr);
 		void setProcessType(unsigned char key, void(*fnc)(char*));
 
@@ -42,13 +44,11 @@ namespace Engine
 		//World
 		friend class GameWrapper;
 		World* world;
+		Camera* cam;
 
 		bool isCudaRequested;
 
 		std::unordered_map<std::string, keyboard_listener> keyboard_functions;
-		
-		//RayTracers
-		RenderController mRenderController;
 	};
 
 	class GameWrapper

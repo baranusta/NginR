@@ -8,6 +8,7 @@ class Moveable
 public:
 
 	Moveable();
+	virtual ~Moveable();
 	void update();
 	virtual void rotate(Angle& moveVector);
 

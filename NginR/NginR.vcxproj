@@ -209,6 +209,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClCompile Include="utils\FileReading.cpp" />
     <ClCompile Include="utils\Vec3.cpp" />
     <ClCompile Include="viewutils\TextViewGL.cpp" />
+    <ClCompile Include="world\objects-cpu\camera\Camera.cpp" />
     <ClCompile Include="world\objects-cpu\game-objects\GameObject.cpp" />
     <ClCompile Include="world\objects-cpu\game-objects\Sphere.cpp" />
     <ClCompile Include="world\objects-cpu\game-objects\Triangle.cpp" />
@@ -225,6 +226,8 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="graphic-library-wrappers\GraphicLibraryWrapper.h" />
     <ClInclude Include="graphic-library-wrappers\GraphicLibraryWrapperFactory.h" />
     <ClInclude Include="graphic-library-wrappers\opengl-wrapper\OpenGLWrapper.h" />
+    <ClInclude Include="Observer.h" />
+    <ClInclude Include="renderers\IRenderOptionChangeObserver.h" />
     <ClInclude Include="renderers\raytracers\RayTracingStrategyCPU.h" />
     <ClInclude Include="renderers\raytracers\RayTracingStrategyCUDA.h" />
     <ClInclude Include="renderers\raytracers\RayTracingStrategySequential.h" />

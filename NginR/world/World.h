@@ -9,19 +9,20 @@
 #include "objects-cpu/game-objects/GameObject.h"
 #include "objects-cpu/light/Light.h"
 #include "objects-cpu/moving-objects/Moveable.h"
+#include "../renderers/IRenderOptionChangeObserver.h"
 
 
 enum RenderOptionNames;
-
 /*
 This class is responsible for all the objects in the scene
 1. all Objects
 2. Light
 3. Camera
 */
-class World
+class World : public IRenderOptionChangedObserver
 {
 public:
+	void publishProcessorTypeChanged(RenderOptionNames type, char* text) override;
 
 	World();
 	World(Color);
@@ -33,7 +34,8 @@ public:
 
 	void setGraphicLibrary(Engine::GraphicLibraryWrapper* library);
 	void setUpdateType(RenderOptionNames type);
-	void updateObjects(ProcessorType pType);
+	
+	void updateObjects();
 
 	Light getLight() const;
 	int getObjectSize() const;
@@ -66,6 +68,8 @@ private:
 
 	bool isCUDAenabled;
 
+	//This must be set somehow too..
+	ProcessorType pType = CPU;
 	RenderOptionNames updateType;
 	Engine::GraphicLibraryWrapper* gLibrary;
 

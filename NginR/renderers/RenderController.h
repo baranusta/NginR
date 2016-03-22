@@ -5,19 +5,31 @@
 
 #include "RenderStrategy.h"
 #include "../world/World.h"
+#include "../Observer.h"
 
-class RenderController{
+class RenderController : public Observable
+{
 public:
 	RenderController();
 	~RenderController();
+
+	void registerObservingEvent(IRenderOptionChangedObserver* vable);
+	void unregisterObservingEvent(Observable* vable) override;
 	void AddStrategy(RenderOptionNames key, RenderStrategy* strategy);
-	void Apply(World& w, Vec3<int> ViewPort, unsigned int* dst) const;
-	bool SetStrategy(RenderOptionNames key, void(*fnc)(char*));
+	void Apply(const Light & light,
+		const std::vector<GameObject*>& objects,
+								unsigned int* src,
+								unsigned int* dst,
+								const Vec3<float>& camPos,
+								int distance,
+								int width,
+								int height) const;
+	bool SetStrategy(RenderOptionNames key);
 	ProcessorType getProcessorType() const;
 private:
+	std::forward_list<IRenderOptionChangedObserver*> observers;
 	RenderStrategy* selectedStrategy;
 	RenderStrategy** Strategies;
 };
-
 
 #endif

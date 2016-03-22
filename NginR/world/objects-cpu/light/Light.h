@@ -10,11 +10,11 @@ public:
 	status(true), AmbientLight(Ambient), DiffuseLight(Diffuse), SpecularhighLight(Specular), position(pos)
 	{};
 	~Light();
-	Vec3<float> getPos();
+	Vec3<float> getPos() const;
 
-	Color getSpec();
-	Color getDiffuse();
-	Color getAmbient();
+	Color getSpec() const;
+	Color getDiffuse() const;
+	Color getAmbient() const;
 	void changeStatus(bool);
 	void changePosition(Vec3<float> pos);
 	

@@ -2,11 +2,11 @@
 
 #include <algorithm>
 
-void RayTracingStrategyCPU::IterateInnerLoop(const World & w, Vec3<int> ViewPort, int i, int k, unsigned int* dst)
+void RayTracingStrategyCPU::IterateInnerLoop(const Light & light, const std::vector<GameObject*>& objects, int screenSizeX, int i, int k, unsigned int* dst)
 {
-	for (int j = -ViewPort.getZ() / 2, t = 0; j < ViewPort.getZ() / 2; j++, t++)
+	for (int j = -screenSizeX / 2, t = 0; j < screenSizeX / 2; j++, t++)
 	{
-		Vec3<float> src(ViewPort.getX(), i, j);
+		Vec3<float> src(0, j, i);
 		Vec3<float> ray = Vec3<float>(1, 0, 0);
 		/*Vec3 ray = Vec3(ViewPort.getX(), i, j) - eyePos;
 		ray.rotate(ViewPortAngle);
@@ -14,18 +14,17 @@ void RayTracingStrategyCPU::IterateInnerLoop(const World & w, Vec3<int> ViewPort
 		float minDist = 1000000;
 		Vec3<float> Normal, hitPoint;
 		int objectId = -1;
-		std::vector<GameObject*> Objects = w.GetObjects();
-		for (int id = 0, size = Objects.size(); id < size; id++)
+		for (int id = 0, size = objects.size(); id < size; id++)
 		{
 			float dist;
 			Vec3<float> N, hP;
-			if (Objects[id]->isRayIntersects(ray, src, hP, dist))
+			if (objects[id]->isRayIntersects(ray, src, hP, dist))
 			{
 				
 				if (dist < minDist)
 				{
 					minDist = dist;
-					Vec3<float> normal = Objects[id]->getNormal(hP);
+					Vec3<float> normal = objects[id]->getNormal(hP);
 					Normal = normal;
 					hitPoint = hP;
 					objectId = id; 
@@ -33,24 +32,22 @@ void RayTracingStrategyCPU::IterateInnerLoop(const World & w, Vec3<int> ViewPort
 			}
 		}
 
-
 		if (minDist != 1000000)
 		{
-			float wow = DetermineColor(w.getLight(), ray, Normal, hitPoint, objectId, &Objects);
-			dst[t * (int)ViewPort.getY() + k] = wow;
+			float wow = DetermineColor(light, ray, Normal, hitPoint, objectId, objects);
+			dst[t + k] = wow;
 		}
 		else
 		{
-			float ws = w.getAmbient().rgbToInt();
-			dst[t * (int)ViewPort.getY() + k] = ws;
-
+			float ws = Color(0.3f, 0.3f, 0.3f).rgbToInt();
+			dst[t + k] = ws;
 		}
 		//World->SendRay(collidedObj,size,ray,eyePos,Objects);
 		//Color pixelC = DetermineColor(collidedObj,size);
 	}
 }
 
-int RayTracingStrategyCPU::DetermineColor(Light& light, Vec3<float>& ray, Vec3<float>& Normal, Vec3<float>& hitPoint, int objId, std::vector<GameObject*>* Objects) const
+int RayTracingStrategyCPU::DetermineColor(const Light& light, Vec3<float>& ray, Vec3<float>& Normal, Vec3<float>& hitPoint, int objId, const std::vector<GameObject*>& Objects) const
 {
 	Vec3<float> lightPos = light.getPos();
 	Vec3<float> SourceToLight = lightPos - hitPoint;
@@ -59,11 +56,11 @@ int RayTracingStrategyCPU::DetermineColor(Light& light, Vec3<float>& ray, Vec3<f
 
 	if ((ray.dotProduct(Normal)<0 && Normal.dotProduct(SourceToLight)>=0) || (ray.dotProduct(Normal)>=0 && Normal.dotProduct(SourceToLight)<=0))
 	{
-		for (int id = 0; id < Objects->size(); id++)
+		for (int id = 0; id < Objects.size(); id++)
 		{
 			Vec3<float> N, hP;
 			float dist;
-			if (id != objId && (*Objects)[id]->isRayIntersects(SourceToLight, hitPoint, hP, dist))
+			if (id != objId && Objects[id]->isRayIntersects(SourceToLight, hitPoint, hP, dist))
 			{
 				willBeShaded = true;
 				break;
@@ -75,7 +72,7 @@ int RayTracingStrategyCPU::DetermineColor(Light& light, Vec3<float>& ray, Vec3<f
 		willBeShaded = true;
 	}
 
-	GameObject* obj = (*Objects)[objId];
+	GameObject* obj = Objects[objId];
 	Color objAmb = obj->getAmbient();
 	Color baseColor = objAmb * light.getAmbient();
 	if (willBeShaded)

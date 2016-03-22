@@ -1,21 +1,21 @@
 #include "Light.h"
 
-Vec3<float> Light::getPos()
+Vec3<float> Light::getPos() const
 {
 	return position;
 }
 
-Color Light::getSpec()
+Color Light::getSpec() const
 {
 	return SpecularhighLight;
 }
 
-Color Light::getDiffuse()
+Color Light::getDiffuse() const
 {
 	return DiffuseLight;
 }
 
-Color Light::getAmbient()
+Color Light::getAmbient() const
 {
 	return AmbientLight;
 }

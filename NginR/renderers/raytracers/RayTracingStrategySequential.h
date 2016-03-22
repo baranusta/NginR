@@ -14,11 +14,19 @@ public:
 		this->name = "CPU";
 	}
 
-	void DrawNextFrame(World& w, Vec3<int> ViewPort, unsigned int* dst)
+	void DrawNextFrame(const Light & light,
+		const std::vector<GameObject*>& objects,
+		unsigned int* src,
+		unsigned int* dst,
+		const Vec3<float>& camPos,
+		int distance,
+		int width,
+		int height)
 	{
-		for (int i = -ViewPort.getY() / 2, k = 0; i < ViewPort.getY() / 2; i++, k++)
+		for (int i = -height / 2, k = 0; i < height / 2; i++)
 		{
-			IterateInnerLoop(w, ViewPort, i, k,dst);
+			IterateInnerLoop(light, objects, width, i, k, dst);
+			k += width;
 		}
 	}
 };

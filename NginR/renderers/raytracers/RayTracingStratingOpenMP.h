@@ -13,16 +13,23 @@ public:
 		this->name = "OpenMP";
 	}
 
-	void DrawNextFrame(World& w, Vec3<int> ViewPort, unsigned int* dst) override
+	void DrawNextFrame(const Light & light,
+		const std::vector<GameObject*>& objects,
+		unsigned int* src,
+		unsigned int* dst,
+		const Vec3<float>& camPos,
+		int distance,
+		int width,
+		int height) override
 	{
 		int i, k;
-		int min = -ViewPort.getY() / 2;
-		int max = ViewPort.getY() / 2;
+		int min = -height / 2;
+		int max = height / 2;
 		#pragma omp parallel for num_threads(4) private(i,k)
 			for (i = min; i < max; i++)
 			{
-				k = i + max;
-				IterateInnerLoop(w, ViewPort, i, k, dst);
+				k = i + width;
+				IterateInnerLoop(light,objects, width, i, k, dst);
 			}
 	}
 };

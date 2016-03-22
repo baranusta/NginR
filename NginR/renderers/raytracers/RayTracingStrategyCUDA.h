@@ -8,12 +8,19 @@ class RayTracingStrategyCUDA : public RenderStrategy
 {
 public:
 	RayTracingStrategyCUDA(float d, float p)
-		:RenderStrategy(d, p, GPUCUDA)
+		:RenderStrategy(d, p,GPUCUDA)
 	{
 		this->name = "CUDA";
 	}
 
-	void DrawNextFrame(World& w, Vec3<int> ViewPort, unsigned int* dst) override;
+	void DrawNextFrame(const Light & light,
+		const std::vector<GameObject*>& objects,
+		unsigned int* src,
+		unsigned int* dst,
+		const Vec3<float>& camPos,
+		int distance,
+		int width,
+		int height) override;
 private:
 	int elmSize;
 };

@@ -64,6 +64,9 @@
     <ClCompile Include="utils\Angle.h">
       <Filter>engine\utils</Filter>
     </ClCompile>
+    <ClCompile Include="world\objects-cpu\camera\Camera.cpp">
+      <Filter>engine\world\objects-cpu\camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="engine">
@@ -202,6 +205,12 @@
     </ClInclude>
     <ClInclude Include="world\objects-cpu\moving-objects\MoveableSphere.h">
       <Filter>engine\world\objects-cpu\moving_objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="renderers\IRenderOptionChangeObserver.h">
+      <Filter>engine\renderers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

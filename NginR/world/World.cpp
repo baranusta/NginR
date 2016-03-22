@@ -4,7 +4,7 @@
 
 extern "C" void CudaUpdateObjects(float*, int);
 
-World::World()
+World::World() 
 {
 	AmbientColor = Color(0,0,0);
 	gLibrary = nullptr;
@@ -114,7 +114,7 @@ float* World::getCudaObjects() const
 	return cudaObjects;
 }
 
-void World::updateObjects(ProcessorType pType)
+void World::updateObjects()
 {
 	switch (pType)
 	{
@@ -160,6 +160,11 @@ void World::_updateObjectsCUDA()
 		wow = objects;
 		CudaUpdateObjects(objects, objectSize);
 	});
+}
+
+void World::publishProcessorTypeChanged(RenderOptionNames type, char* text)
+{
+	updateType = type;
 }
 
 void World::setUpdateType(RenderOptionNames type)
