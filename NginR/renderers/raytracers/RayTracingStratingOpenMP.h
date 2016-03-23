@@ -22,13 +22,13 @@ public:
 		int width,
 		int height) override
 	{
-		int i, k;
+		int i;
 		int min = -height / 2;
 		int max = height / 2;
-		#pragma omp parallel for num_threads(4) private(i,k)
+		#pragma omp parallel for num_threads(4) private(i)
 			for (i = min; i < max; i++)
 			{
-				k = i + width;
+				int k = (i - min) * width;
 				IterateInnerLoop(light,objects, width, i, k, dst);
 			}
 	}
