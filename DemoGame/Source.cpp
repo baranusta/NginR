@@ -63,8 +63,15 @@ public:
 			Color(1.f, 1.f, 1.f));
 
 		addTriangle(*world);
+		zPos = -150;
+		addSpheres(*world);
+		addSpheres(*world);
 		addSpheres(*world);
 		
+		addSpheres(*world);
+		addSpheres(*world);
+		addSpheres(*world);
+
 		setWorld(world);
 		setCamera(cam);
 
@@ -73,16 +80,18 @@ public:
 		listener('1', 0, 0);
 	}
 private:
+
+	int zPos;
 	void addTriangle(World& w)
 	{
 		MoveableTriangle* object = new MoveableTriangle(Vec3<float>(0, 50, 0),
 			Vec3<float>(0, -50, 0),
-			Vec3<float>(30, 0, 50));
+			Vec3<float>(0, 0, 50));
 
 		object->setDiffuse(Color(1, 0.4, 0.7));
-		object->setAmbient(Color(18, 80, 26));
-		object->setSpecular(Color(82, 23, 32));
-
+		object->setAmbient(Color(1, 1, 1));
+		object->setSpecular(Color(1, 1, 1));
+		object->rotate(Angle(0,80, 0, Angle::DEGREE));
 		object->setUpdateFunction([object]()
 		{
 			Angle wow(0, 2, 0, Angle::DEGREE);
@@ -105,7 +114,8 @@ private:
 	};
 	void addSpheres(World& w)
 	{
-		MoveableSphere* sphere = new MoveableSphere(Vec3<float>(0, 100, 150), 75);
+		MoveableSphere* sphere = new MoveableSphere(Vec3<float>(0, 0, zPos), 75);
+		zPos += 40;
 		sphere->setDiffuse(Color(1, 0.4, 0.7));
 		sphere->setAmbient(Color(18, 80, 26));
 		sphere->setSpecular(Color(82, 23, 32));

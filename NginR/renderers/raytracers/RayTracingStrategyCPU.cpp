@@ -6,7 +6,7 @@ void RayTracingStrategyCPU::IterateInnerLoop(const Light & light, const std::vec
 {
 	for (int j = -screenSizeX / 2, t = 0; j < screenSizeX / 2; j++, t++)
 	{
-		Vec3<float> src(0, j, i);
+		Vec3<float> src(-200, j, i);
 		Vec3<float> ray = Vec3<float>(1, 0, 0);
 		/*Vec3 ray = Vec3(ViewPort.getX(), i, j) - eyePos;
 		ray.rotate(ViewPortAngle);
@@ -54,7 +54,7 @@ int RayTracingStrategyCPU::DetermineColor(const Light& light, Vec3<float>& ray, 
 	SourceToLight.Normalize();
 	bool willBeShaded = false;
 
-	if ((ray.dotProduct(Normal)<0 && Normal.dotProduct(SourceToLight)>=0) || (ray.dotProduct(Normal)>=0 && Normal.dotProduct(SourceToLight)<=0))
+	if ((ray.dotProduct(Normal)<0 && Normal.dotProduct(SourceToLight)>0) || (ray.dotProduct(Normal)>0 && Normal.dotProduct(SourceToLight)<0))
 	{
 		for (int id = 0; id < Objects.size(); id++)
 		{

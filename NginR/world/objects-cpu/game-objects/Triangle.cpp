@@ -121,10 +121,17 @@ bool Triangle::isRayIntersects(Vec3<float>& ray, Vec3<float>& src, Vec3<float>& 
 	float v = qvec.dotProduct(ray) * inv_det;
 
 	if (v < 0.f || u + v  > 1.f) return false;
-
-	float t = distance.dotProduct(edge2from0) * inv_det;
-	Point = corners[0] + edge2from0 * v + edge1from0 * u;
-	return true;
+Point = corners[0] + edge2from0 * v + edge1from0 * u;
+		float xDif = Point.getX() - src.getX();
+		if (ray.getX() != 0)
+			return xDif / ray.getX() > 0;
+		float yDif = Point.getY() - src.getY();
+		if (ray.getY() != 0)
+			return yDif / ray.getY() > 0;
+		float zDif = Point.getZ() - src.getZ();
+		if (ray.getZ() != 0)
+			return zDif / ray.getZ() > 0;
+		return true;
 }
 
  Vec3<float> Triangle::getNormal(const Vec3<float>& intersectionPoint) const
