@@ -212,10 +212,16 @@
     <ClInclude Include="renderers\IRenderOptionChangeObserver.h">
       <Filter>engine\renderers</Filter>
     </ClInclude>
+    <ClInclude Include="world\IStaticWorldChangeObserver.h">
+      <Filter>engine\world</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="renderers\raytracers\RayTrace.cu">
       <Filter>engine\renderers\raytracers</Filter>
     </CudaCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

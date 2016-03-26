@@ -8,6 +8,10 @@ class Observable;
 class Observer
 {
 public:
+	virtual ~Observer()
+	{
+		
+	}
 	void addObservable(Observable* vable)
 	{
 		observables.push_front(vable);
@@ -27,17 +31,22 @@ class Observable
 public:
 	virtual ~Observable()
 	{
-		
+		for (auto observer : observers)
+			observer->removeObservable(this);
 	}
 
-	void registerObservingEvent(Observable* vable)
+	void registerObservingEvent(Observer*vable)
 	{
-		registerForEvent(vable);
+		observers.push_front(vable);
 	}
-	virtual void unregisterObservingEvent(Observable* vable) = 0;
+	void unregisterObservingEvent(Observer* vable)
+	{
+		observers.remove(vable);
+	}
 
-private:
-	void registerForEvent(Observable* vable);
+protected:
+
+	std::forward_list<Observer*> observers;
 
 };
 

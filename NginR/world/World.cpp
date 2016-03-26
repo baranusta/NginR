@@ -18,7 +18,8 @@ World::World(Color c)
 
 World::~World()
 {
-	Objects.clear();
+	static_game_objects.clear();
+	moveable_game_objects.clear();
 	lights.clear();
 }
 
@@ -26,20 +27,25 @@ void World::addWorld(World w)
 {
 	for (Light light : w.lights)
 		this->addLight(light);
-	for (GameObject* object : w.Objects)
-	{
-		this->addObject(object);
-	}
+
+	for (GameObject* object : w.static_game_objects) static_game_objects.push_back(object);
+	for (GameObject* object : w.moveable_game_objects) moveable_game_objects.push_back(object);
+	for (Moveable* object : w.moveable_list) moveable_list.push_back(object);
+
 	if (isCUDAenabled && updateType != GPUCUDA)
 		initGPUMemoryForObjects();
 }
 
 void World::addObject(GameObject* p)
 {
-	Objects.push_back(p);
 	if (Moveable* moveable = dynamic_cast< Moveable* >(p))
 	{
-		moveable_objects.push_back(moveable);
+		moveable_list.push_back(moveable);
+		moveable_game_objects.push_back(p);
+	}
+	else
+	{
+		static_game_objects.push_back(p);
 	}
 }
 
@@ -80,7 +86,7 @@ void World::setCudaEnabled(bool isCudaEnabled)
 
 void World::initGPUMemoryForObjects()
 {
-	gLibrary->initializeCudaMemory(Objects.size() * 8 * sizeof(float));
+	//gLibrary->initializeCudaMemory(Objects.size() * 8 * sizeof(float));
 }
 
 void World::unmapCUDAObjects()
@@ -141,25 +147,35 @@ void World::updateObjects()
 void World::_updateObjectsOpenMP()
 {
 	#pragma omp parallel for schedule(static)
-	for (int i = 0; i< Objects.size(); i++)
-		moveable_objects[i]->update();
+	for (int i = 0; i< moveable_list.size(); i++)
+		moveable_list[i]->update();
+}
+
+void World::_publishStaticWorldChanged(std::vector<GameObject*> objects, std::vector<Light> lights)
+{
+
+	for (Observer* obs : observers)
+		if (IStaticWorldChangeObserver* c = dynamic_cast<IStaticWorldChangeObserver*>(obs))
+		{
+			c->staticWorldChanged(objects, lights);
+		}
 }
 
 void World::_updateObjectsSequential()
 {
-	for (Moveable* object : moveable_objects)
+	for (Moveable* object : moveable_list)
 		object->update();
 }
 
 void World::_updateObjectsCUDA()
 {
-	int objectSize = Objects.size();
-	float* &wow = cudaObjects;
-	gLibrary->updateObjectsAtCudaMemory([objectSize,&wow](float* objects)
-	{
-		wow = objects;
-		CudaUpdateObjects(objects, objectSize);
-	});
+	//int objectSize = Objects.size();
+	//float* &wow = cudaObjects;
+	//gLibrary->updateObjectsAtCudaMemory([objectSize,&wow](float* objects)
+	//{
+	//	wow = objects;
+	//	CudaUpdateObjects(objects, objectSize);
+	//});
 }
 
 void World::publishProcessorTypeChanged(RenderOptionNames type, char* text)
@@ -173,44 +189,39 @@ void World::setUpdateType(RenderOptionNames type)
 	{
 		if (type!=CUDA)
 		{
-			float* objectArr = new float[Objects.size() * 8];
-			for (int i = 0; i < Objects.size(); i++)
-			{
-				Vec3<float> pos;
-				Color color;
-				float r;
-				bool toRight;
-				//Objects[i]->getInfo(pos, r, color, toRight);
-				//objectArr[i * 8] = pos.getX();
-				//objectArr[i * 8 + 1] = pos.getY();
-				//objectArr[i * 8 + 2] = pos.getZ();
-				//objectArr[i * 8 + 3] = r;
-				//objectArr[i * 8 + 4] = color.getR();
-				//objectArr[i * 8 + 5] = color.getG();
-				//objectArr[i * 8 + 6] = color.getB();
-				//objectArr[i * 8 + 7] = toRight ? 1.0f : -1.0f;
-			}
-			gLibrary->copyObjectsFromCuda(objectArr, Objects.size() * 8);
-			delete objectArr;
+			//float* objectArr = new float[Objects.size() * 8];
+			//for (int i = 0; i < Objects.size(); i++)
+			//{
+			//	Vec3<float> pos;
+			//	Color color;
+			//	float r;
+			//	bool toRight;
+			//	//Objects[i]->getInfo(pos, r, color, toRight);
+			//	//objectArr[i * 8] = pos.getX();
+			//	//objectArr[i * 8 + 1] = pos.getY();
+			//	//objectArr[i * 8 + 2] = pos.getZ();
+			//	//objectArr[i * 8 + 3] = r;
+			//	//objectArr[i * 8 + 4] = color.getR();
+			//	//objectArr[i * 8 + 5] = color.getG();
+			//	//objectArr[i * 8 + 6] = color.getB();
+			//	//objectArr[i * 8 + 7] = toRight ? 1.0f : -1.0f;
+			//}
+			//gLibrary->copyObjectsFromCuda(objectArr, Objects.size() * 8);
+			//delete objectArr;
 		}
 	}
 	else
 	{
-		if (type == CUDA)
+		/*if (type == CUDA)
 		{
 			float* objectArr = new float[Objects.size() * 8]; 
 			
 			CopyToGPUArray(objectArr);
 			gLibrary->copyObjectsToCuda(objectArr, Objects.size() * 8);
 			delete objectArr;
-		}
+		}*/
 	}
 	updateType = type;
-}
-
-int World::getObjectSize() const
-{
-	return Objects.size();
 }
 
 #pragma region private_methods

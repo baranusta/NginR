@@ -19,19 +19,6 @@ RenderController::~RenderController()
 	delete[] Strategies;
 }
 
-void RenderController::registerObservingEvent(IRenderOptionChangedObserver* vable)
-{
-	observers.push_front(vable);
-}
-
-void RenderController::unregisterObservingEvent(Observable* vable)
-{
-	if (IRenderOptionChangedObserver* c = dynamic_cast<IRenderOptionChangedObserver*>(vable))
-	{
-		observers.remove(c);
-	}
-}
-
 void RenderController::AddStrategy(RenderOptionNames key, RenderStrategy* strategy)
 {
 	if (key >= __RENDER_NAME_SIZE__)
@@ -64,8 +51,7 @@ bool RenderController::SetStrategy(RenderOptionNames key)
 			*itr = '\0';
 
 			delete text;
-			for (IRenderOptionChangedObserver* obs : observers)
-				obs->publishProcessorTypeChanged(key,text);
+			
 		}
 		selectedStrategy = newlySelected;
 		return true;
@@ -76,6 +62,15 @@ bool RenderController::SetStrategy(RenderOptionNames key)
 ProcessorType RenderController::getProcessorType() const
 {
 	return selectedStrategy->getProcessorType();
+}
+
+void RenderController::publishRenderOptionChanged(RenderOptionNames key, char* text)
+{
+	for (Observer* obs : observers)
+		if (IRenderOptionChangedObserver* c = dynamic_cast<IRenderOptionChangedObserver*>(obs))
+		{
+			c->publishProcessorTypeChanged(key, text);
+		}
 }
 
 void RenderController::Apply(const Light & light,

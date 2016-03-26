@@ -11,7 +11,7 @@ public:
 		: RenderStrategy(d, p, CPU)
 	{}
 
-	void IterateInnerLoop(const Light & light,const std::vector<GameObject*>& objects, int screenSizeX, int i, int k, unsigned int* dst);
+	void IterateInnerLoop(const Light & light, const std::vector<GameObject*>& objects, int screenSizeX, int i, int k, unsigned int* dst);
 private:
 	int DetermineColor(const Light& light, Vec3<float>& ray, Vec3<float>& Normal, Vec3<float>& hitPoint, int objId, const std::vector<GameObject*>& Objects) const;
 };

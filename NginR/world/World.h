@@ -10,6 +10,7 @@
 #include "objects-cpu/light/Light.h"
 #include "objects-cpu/moving-objects/Moveable.h"
 #include "../renderers/IRenderOptionChangeObserver.h"
+#include "IStaticWorldChangeObserver.h"
 
 
 enum RenderOptionNames;
@@ -19,7 +20,7 @@ This class is responsible for all the objects in the scene
 2. Light
 3. Camera
 */
-class World : public IRenderOptionChangedObserver
+class World : public IRenderOptionChangedObserver,public Observable
 {
 public:
 	void publishProcessorTypeChanged(RenderOptionNames type, char* text) override;
@@ -38,7 +39,6 @@ public:
 	void updateObjects();
 
 	Light getLight() const;
-	int getObjectSize() const;
 	Color getAmbient() const;
 	float* getCudaObjects() const;
 
@@ -52,14 +52,14 @@ public:
 	template<class T>
 	void CopyFromGPUArray(T *obj);
 
-	//This will be removed
-	//when the raytracing strategies implemented
-	std::vector<GameObject*> GetObjects() const
+	std::vector<GameObject*> getMovingObjects() const
 	{
-		return Objects;
+		return moveable_game_objects;
 	}
 
 private:
+
+	void _publishStaticWorldChanged(std::vector<GameObject*> objects, std::vector<Light> lights);
 	void _updateObjectsSequential();
 	void _updateObjectsCUDA();
 	void _updateObjectsOpenMP();
@@ -77,8 +77,14 @@ private:
 
 	//Later This Will hold Light Objects
 	std::vector<Light> lights;
-	std::vector<GameObject*> Objects;
-	std::vector<Moveable*> moveable_objects;
+	std::vector<GameObject*> static_game_objects;
+	std::vector<GameObject*> moveable_game_objects;
+
+	std::vector<Moveable*> moveable_list;
+
+	//StaticWorldChangeObservers
+
+	std::forward_list<IStaticWorldChangeObserver*> observers;
 
 	//CUDA Object
 	float* cudaObjects;

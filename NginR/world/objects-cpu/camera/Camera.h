@@ -3,9 +3,10 @@
 
 #include "../moving-objects/Moveable.h"
 #include "../../renderers/RenderController.h"
+#include "../../IStaticWorldChangeObserver.h"
 #include "../../../renderers/raytracers/RayTracingStrategySequential.h"
 
-class Camera : public Moveable
+class Camera : public Moveable, public IStaticWorldChangeObserver
 {
 public:
 	~Camera();
@@ -17,6 +18,7 @@ public:
 
 	bool setRenderingStrategy(RenderOptionNames key);
 
+	void staticWorldChanged(std::vector<GameObject*> objects, std::vector<Light> lights);
 	void renderNextFrame(World& w, unsigned int* dst);
 
 private:

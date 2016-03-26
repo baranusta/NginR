@@ -13,8 +13,6 @@ public:
 	RenderController();
 	~RenderController();
 
-	void registerObservingEvent(IRenderOptionChangedObserver* vable);
-	void unregisterObservingEvent(Observable* vable) override;
 	void AddStrategy(RenderOptionNames key, RenderStrategy* strategy);
 	void Apply(const Light & light,
 		const std::vector<GameObject*>& objects,
@@ -27,7 +25,7 @@ public:
 	bool SetStrategy(RenderOptionNames key);
 	ProcessorType getProcessorType() const;
 private:
-	std::forward_list<IRenderOptionChangedObserver*> observers;
+	void publishRenderOptionChanged(RenderOptionNames key, char* text);
 	RenderStrategy* selectedStrategy;
 	RenderStrategy** Strategies;
 };

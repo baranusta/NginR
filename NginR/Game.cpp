@@ -13,6 +13,7 @@ Engine::Game::Game(bool isCudaRequested) : isCudaRequested(isCudaRequested)
 
 Engine::Game::~Game()
 {
+
 	delete cam;
 	delete world;
 }
@@ -29,6 +30,8 @@ void Engine::Game::setWorld(World* w)
 
 void Engine::Game::setCamera(Camera* cam)
 {
+	if (this->world != nullptr)
+		world->registerObservingEvent(cam);
 	this->cam = cam;
 }
 

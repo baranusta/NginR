@@ -242,6 +242,7 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     <ClInclude Include="utils\Vec3.h" />
     <ClInclude Include="viewutils\FrameTextViewGL.h" />
     <ClInclude Include="viewutils\TextViewGL.h" />
+    <ClInclude Include="world\IStaticWorldChangeObserver.h" />
     <ClInclude Include="world\objects-cpu\camera\Camera.h" />
     <ClInclude Include="world\objects-cpu\game-objects\GameObjectFactory.h" />
     <ClInclude Include="world\objects-cpu\game-objects\GameObject.h" />
@@ -257,6 +258,9 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="renderers\raytracers\RayTrace.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
