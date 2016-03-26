@@ -31,7 +31,7 @@ void Engine::Game::setWorld(World* w)
 void Engine::Game::setCamera(Camera* cam)
 {
 	if (this->world != nullptr)
-		world->registerObservingEvent(cam);
+		world->attachObserver(cam);
 	this->cam = cam;
 }
 

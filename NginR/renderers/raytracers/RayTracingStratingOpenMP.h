@@ -32,5 +32,10 @@ public:
 				IterateInnerLoop(light,objects, width, i, k, dst);
 			}
 	}
+
+	void updateStaticScene(const std::vector<GameObject*>& objects, const std::vector<Light>& lights, int width, int height) override
+	{
+		
+	}
 };
 #endif

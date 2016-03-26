@@ -9,5 +9,5 @@ public:
 	{
 		
 	};
-	virtual void publishProcessorTypeChanged(RenderOptionNames type, char* text) = 0;
+	virtual void notifyRenderOptionNameChanged(RenderOptionNames type, char* text) = 0;
 };

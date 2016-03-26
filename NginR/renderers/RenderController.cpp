@@ -3,7 +3,7 @@
 
 RenderController::RenderController()
 {
-	selectedStrategy = nullptr;
+	selectedStrategyKey = __RENDER_NAME_SIZE__;
 	Strategies = new RenderStrategy*[__RENDER_NAME_SIZE__]();
 	for (int i = 0; i < __RENDER_NAME_SIZE__; i++)
 		Strategies[i] = nullptr;
@@ -13,55 +13,46 @@ RenderController::~RenderController()
 {
 	for (auto observer : observers)
 		observer->removeObservable(this);
-	selectedStrategy = nullptr;
 	for (int i = 0; i < __RENDER_NAME_SIZE__; i++)
-		delete [] Strategies[i];
-	delete[] Strategies;
+		delete Strategies[i];
+	delete Strategies;
 }
 
 void RenderController::AddStrategy(RenderOptionNames key, RenderStrategy* strategy)
 {
 	if (key >= __RENDER_NAME_SIZE__)
 		throw Exception(NO_SUCH_RENDER_OPTION);
+	selectedStrategyKey = key;
 	if (Strategies[key] != nullptr)
 	{
 		delete Strategies[key];
-		Strategies[key] = strategy;
 	}
-
 	Strategies[key] = strategy;
-
-	if (selectedStrategy == nullptr)
-		selectedStrategy = strategy;
 }
 
 bool RenderController::SetStrategy(RenderOptionNames key)
 {
-	if (Strategies[key] != nullptr)
+	if (Strategies[key] != nullptr && key != selectedStrategyKey)
 	{
-		RenderStrategy* newlySelected = Strategies[key];
-		if (newlySelected->getProcessorType() != selectedStrategy->getProcessorType())
-		{
-			char* mode = "Mode: ";
-			char* name = selectedStrategy->GetName();
-			char* text = new char[std::strlen(name) + 7];
-			char* itr = text;
-			while (*mode) *itr++ = *mode++;
-			while (*name) *itr++ = *name++;
-			*itr = '\0';
-
-			delete text;
-			
-		}
-		selectedStrategy = newlySelected;
+		selectedStrategyKey = key;
+		publishRenderOptionChanged(key, Strategies[key]->GetName());
 		return true;
 	}
 	return false;
 }
 
+void RenderController::attachObserver(Observer* vable)
+{
+	Observable::attachObserver(vable);
+	if (IRenderOptionChangedObserver* c = dynamic_cast<IRenderOptionChangedObserver*>(vable))
+	{
+		c->notifyRenderOptionNameChanged(selectedStrategyKey, Strategies[selectedStrategyKey]->GetName());
+	}
+}
+
 ProcessorType RenderController::getProcessorType() const
 {
-	return selectedStrategy->getProcessorType();
+	return Strategies[selectedStrategyKey]->getProcessorType();
 }
 
 void RenderController::publishRenderOptionChanged(RenderOptionNames key, char* text)
@@ -69,7 +60,7 @@ void RenderController::publishRenderOptionChanged(RenderOptionNames key, char* t
 	for (Observer* obs : observers)
 		if (IRenderOptionChangedObserver* c = dynamic_cast<IRenderOptionChangedObserver*>(obs))
 		{
-			c->publishProcessorTypeChanged(key, text);
+			c->notifyRenderOptionNameChanged(key, text);
 		}
 }
 
@@ -82,10 +73,10 @@ void RenderController::Apply(const Light & light,
 	int width,
 	int height) const
 {
-	if (this->selectedStrategy == nullptr)
+	if (selectedStrategyKey == __RENDER_NAME_SIZE__)
 		return;
 
-	this->selectedStrategy->DrawNextFrame(light,
+	Strategies[selectedStrategyKey]->DrawNextFrame(light,
 		objects,
 		src,
 		dst,
@@ -93,4 +84,9 @@ void RenderController::Apply(const Light & light,
 		distance,
 		width,
 		height);
+}
+
+void RenderController::updateStaticScene(const std::vector<GameObject*>& objects, const std::vector<Light>& lights, int width, int height)
+{
+	Strategies[selectedStrategyKey]->updateStaticScene(objects,lights,width,height);
 }

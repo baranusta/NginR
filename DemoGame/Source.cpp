@@ -6,27 +6,26 @@
 #include <world/objects-cpu/moving-objects/MoveableSphere.h>
 
 
-class textController : public IRenderOptionChangedObserver
+class RendererModeText : public IRenderOptionChangedObserver,public TextViewGL
 {
 public:
-	textController() :mode(TextViewGL(-0.95, 0.88))
+	RendererModeText(float xMargin, float yMargin) :TextViewGL(xMargin, yMargin)
 	{
 
 	}
 
-	void publishProcessorTypeChanged(RenderOptionNames type, char* text) override
+	void notifyRenderOptionNameChanged(RenderOptionNames type, char* name) override
 	{
-		mode.SetText(text);
+		char* mode = "Mode: ";
+		char* text = new char[std::strlen(name) + 7];
+		char* itr = text;
+		while (*mode) *itr++ = *mode++;
+		while (*name) *itr++ = *name++;
+		*itr = '\0';
+		SetText(text);
 	}
-
-	void addTextsToScene(std::vector<TextViewGL*>& textViewArr)
-	{
-		textViewArr.push_back(&mode);
-	}
-private:
-	TextViewGL mode;
 };
-textController* text;
+
 #define KEYBOARD_LISTENER_FOR_RENDER "processorBidisi"
 #define KEYBOARD_LISTENER_FOR_TRIANGLE "HizliDonCanisi"
 
@@ -34,7 +33,7 @@ class DemoGame : public Engine::Game
 {
 public:
 
-	DemoGame(bool willCudaRender) : Game(willCudaRender)
+	DemoGame(bool willCudaRender, RendererModeText* text) : Game(willCudaRender)
 	{
 		RenderController* renderer = new RenderController();
 		renderer->AddStrategy(Sequential, new RayTracingStrategySequential(0.8f, 20.0));
@@ -43,6 +42,7 @@ public:
 		{
 			renderer->AddStrategy(CUDA, new RayTracingStrategyCUDA(0.8f, 20.0));
 		}
+		renderer->SetStrategy(Sequential);
 
 		Camera* cam = new Camera(Vec3<float>(-2000,0,0),2000,768,512,renderer);
 		
@@ -62,6 +62,8 @@ public:
 			Color(0.8f, 0.8f, 0.8f),
 			Color(1.f, 1.f, 1.f));
 
+		world->addObject(new Sphere(Vec3<float>(0.f,-100.f,-50.f),30));
+
 		addTriangle(*world);
 		zPos = -150;
 		addSpheres(*world);
@@ -75,9 +77,8 @@ public:
 		setWorld(world);
 		setCamera(cam);
 
-		renderer->registerObservingEvent(text);
-		renderer->registerObservingEvent(world);
-		listener('1', 0, 0);
+		renderer->attachObserver(text);
+		renderer->attachObserver(world);
 	}
 private:
 
@@ -142,12 +143,10 @@ int main()
 {
 	Engine::Engine Enginar;
 
-	text = new textController();
-	std::vector<TextViewGL*> textViewArr;
-	text->addTextsToScene(textViewArr);
+	RendererModeText* text = new RendererModeText(-0.95f,0.88);
+	std::vector<TextViewGL*> textViewArr = {text};	
 	Enginar.addTextViews(textViewArr);
-
-	DemoGame mGame(true);
+	DemoGame mGame(true,text);
 	Enginar.setGame(&mGame);
 	Enginar.startEngine();
 	return 0;

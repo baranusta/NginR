@@ -23,7 +23,6 @@ This class is responsible for all the objects in the scene
 class World : public IRenderOptionChangedObserver,public Observable
 {
 public:
-	void publishProcessorTypeChanged(RenderOptionNames type, char* text) override;
 
 	World();
 	World(Color);
@@ -51,6 +50,10 @@ public:
 	void CopyToGPUArray(T *obj);
 	template<class T>
 	void CopyFromGPUArray(T *obj);
+
+
+	void notifyRenderOptionNameChanged(RenderOptionNames type, char* text) override;
+	void attachObserver(Observer* observer);
 
 	std::vector<GameObject*> getMovingObjects() const
 	{

@@ -33,8 +33,9 @@ bool Camera::setRenderingStrategy(RenderOptionNames key)
 	return renderController->SetStrategy(key);
 }
 
-void Camera::staticWorldChanged(std::vector<GameObject*> objects, std::vector<Light> lights)
+void Camera::staticWorldChanged(const std::vector<GameObject*>& objects, const std::vector<Light>& lights)
 {
+	renderController->updateStaticScene(objects, lights, sceneWidth, sceneHeight);
 }
 
 void Camera::renderNextFrame(World& w, unsigned* dst)

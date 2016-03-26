@@ -178,9 +178,16 @@ void World::_updateObjectsCUDA()
 	//});
 }
 
-void World::publishProcessorTypeChanged(RenderOptionNames type, char* text)
+void World::notifyRenderOptionNameChanged(RenderOptionNames type, char* text)
 {
 	updateType = type;
+}
+
+void World::attachObserver(Observer* observer)
+{
+	Observable::attachObserver(observer);
+	if (IStaticWorldChangeObserver* staticWorldObserver = dynamic_cast<IStaticWorldChangeObserver*>(observer))
+		staticWorldObserver->staticWorldChanged(static_game_objects, lights);
 }
 
 void World::setUpdateType(RenderOptionNames type)

@@ -22,11 +22,15 @@ public:
 								int distance,
 								int width,
 								int height) const;
+	void updateStaticScene(const std::vector<GameObject*>& objects, const std::vector<Light>& lights, int width, int height);
+
 	bool SetStrategy(RenderOptionNames key);
+	void attachObserver(Observer*vable) override;
+
 	ProcessorType getProcessorType() const;
 private:
 	void publishRenderOptionChanged(RenderOptionNames key, char* text);
-	RenderStrategy* selectedStrategy;
+	RenderOptionNames selectedStrategyKey;
 	RenderStrategy** Strategies;
 };
 

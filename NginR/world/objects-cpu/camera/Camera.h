@@ -18,7 +18,7 @@ public:
 
 	bool setRenderingStrategy(RenderOptionNames key);
 
-	void staticWorldChanged(std::vector<GameObject*> objects, std::vector<Light> lights);
+	void staticWorldChanged(const std::vector<GameObject*>& objects, const std::vector<Light>& lights) override;
 	void renderNextFrame(World& w, unsigned int* dst);
 
 private:

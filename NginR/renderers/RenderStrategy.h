@@ -24,7 +24,8 @@ public:
 		int distance,
 		int width,
 		int height) = 0;
-	//virtual void setUpStaticScene(std::vector<GameObject*> staticObjectsArr);
+
+	virtual void updateStaticScene(const std::vector<GameObject*>& objects, const std::vector<Light>& lights, int width, int height) = 0;
 
 	char* GetName() const
 	{

@@ -35,11 +35,12 @@ public:
 			observer->removeObservable(this);
 	}
 
-	void registerObservingEvent(Observer*vable)
+	virtual void attachObserver(Observer*vable)
 	{
 		observers.push_front(vable);
 	}
-	void unregisterObservingEvent(Observer* vable)
+
+	void detachObserver(Observer* vable)
 	{
 		observers.remove(vable);
 	}

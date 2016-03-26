@@ -9,5 +9,5 @@ public:
 	{
 
 	};
-	virtual void staticWorldChanged(std::vector<GameObject*> objects, std::vector<Light> lights) = 0;
+	virtual void staticWorldChanged(const std::vector<GameObject*>& objects, const std::vector<Light>& lights) = 0;
 };
